@@ -9,7 +9,7 @@
 *.zip
 *.vi
 *~
-
+*secrets*
 # Folders to ignore
 .hg
 .svn
