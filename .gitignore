@@ -1,0 +1,22 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+.idea
+
+node_modules
+dist
+.tmp
+app/bower_components
