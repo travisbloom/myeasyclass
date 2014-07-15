@@ -12,9 +12,6 @@ var onError = function (err) {
 //compiles less
 gulp.task('less', function() {
     return gulp.src('app/styles/main.less')
-        .pipe(plumber({
-            errorHandler: onError
-        }))
         .pipe(less())
         .pipe(gulp.dest('dist'));
 });
@@ -23,7 +20,8 @@ gulp.task('less', function() {
 gulp.task('bower', function() {
     return gulp.src([
         'app/bower_components/angular/angular.js',
-        'app/bower_components/parse/index.js'
+        'app/bower_components/parse/index.js',
+        'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
     ])
         .pipe(concat('packages.js'))
 //        .pipe(ngmin())
@@ -38,9 +36,6 @@ gulp.task('js', function() {
         'app/scripts/app.js',
         'app/scripts/**/*.js'
     ])
-        .pipe(plumber({
-            errorHandler: onError
-        }))
         .pipe(concat('app.js'))
 //        .pipe(ngmin())
 //        .pipe(uglify())
@@ -71,5 +66,4 @@ gulp.task('build', ['move', 'less', 'js', 'bower']);
 gulp.task('watch', ['less'], function () {
     gulp.watch('app/styles/**/*.less', ['less']);
     gulp.watch('app/scripts/*.js', ['js']);
-    gulp.watch('app/bower_components/**/*.*', ['bower']);
 });

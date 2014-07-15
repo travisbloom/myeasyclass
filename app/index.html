@@ -5,14 +5,30 @@
         <title>MyEasyClass</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="main.css">
     </head>
     <body>
     <div data-ng-app="myEasyClass">
         <div data-ng-controller="myCtrl">
-            {{test}} my app
+            <div>
+                {{test}} my name
+                <div class="row">
+                    <!--Sidebar-->
+                   <div class="col-sm-4">
+                       <div sidebar-info></div>
+                   </div>
+                    <!--Main container-->
+                    <div class="col-sm-4">
+
+                    </div>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!-- Google Analytics -->
     <script>
         (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
         function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
