@@ -7,7 +7,7 @@ var clean = require('gulp-clean');
 //prevent streams from crashing on failed concats/minifications, logs out the issue and continues watching
 var plumber = require('gulp-plumber');
 var onError = function (err) {
-  console.log(err)
+  console.log(err);
 };
 //compiles less
 gulp.task('less', function() {
@@ -34,6 +34,7 @@ gulp.task('bower', function() {
 //compiles js in their proper dependency order. Once app.js is loaded, anything can follow because of Angular dependency injection
 gulp.task('js', function() {
     return gulp.src([
+        'app/scripts/secrets.js',
         'app/scripts/app.js',
         'app/scripts/**/*.js'
     ])

@@ -1,6 +1,6 @@
 node_modules
 dist
-.idea
-app/scripts/secrets
+*.idea
+*secrets*
 app/bower_components
 test/bower_components
