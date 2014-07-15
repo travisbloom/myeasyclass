@@ -5,7 +5,7 @@ angular.module('myEasyClass')
                 loggedIn: Parse.User.current()
             },
             logIn: function (username, pw) {
-                var deferred = q.defer();
+                var deferred = $q.defer();
                 Parse.User.logIn(username, pw, {
                     success: function(user) {
                         deferred.resolve(user);

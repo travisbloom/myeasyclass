@@ -9,20 +9,17 @@
     </head>
     <body>
     <div data-ng-app="myEasyClass">
-        <div data-ng-controller="myCtrl">
-            <div>
-                {{test}} my name
-                <div class="row">
-                    <!--Sidebar-->
-                   <div class="col-sm-4">
-                       <div sidebar-info></div>
-                   </div>
-                    <!--Main container-->
-                    <div class="col-sm-4">
-
-                    </div>
-                    <div class="col-sm-4">
-
+        <div data-ng-controller="mainCtrl">
+            <div class="row">
+                <!--Sidebar-->
+               <div class="col-sm-4">
+                   <div search-container></div>
+                   <div sidebar-info></div>
+               </div>
+                <!--Main container-->
+                <div class="col-sm-8">
+                    <div data-ng-repeat="class in classes">
+                        <div class></div>
                     </div>
                 </div>
             </div>
