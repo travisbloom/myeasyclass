@@ -1,0 +1,9 @@
+{
+  "name": "myeasyclass",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.2.20",
+    "parse": "https://parse.com/downloads/javascript/parse-1.2.19.js"
+  },
+  "devDependencies": {}
+}
