@@ -1,14 +1,20 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
-
+@icon-font-path:          "images/fonts/";
 @color-base: #2d4e8b;
+@navbar-height: 50px;
+.navbar {
+  height: @navbar-height;
+  background: #000;
+  h1 {
+    line-height: @navbar-height;
+    margin: 0 0;
+    font-size: 30px;
+    font-family: 'Permanent Marker',cursive;
+  }
+}
+.container-fluid {
+  margin-top: @navbar-height + 20px;
+}
 
-.class1 {
-  background-color: @color-base;
-}
-.class2 {
-  background-color: #fff;
-  color: @color-base;
-}
-.class3 {
-  border: 1px solid @color-base;
-}
+
+@import "class-row.less";

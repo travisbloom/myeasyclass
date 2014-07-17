@@ -47,9 +47,16 @@ gulp.task('clean-dist', function () {
     return gulp.src('dist/**/*.*', {read: false})
         .pipe(clean());
 });
+//pull bootstrap fonts in to image folder
+gulp.task('get-bootstrap-font', function () {
+    return gulp.src([
+        'app/bower_components/bootstrap/fonts/*.*'
+    ])
 
+        .pipe(gulp.dest('dist/images/fonts'));
+});
 //moves assets not touched by gulp to dist folder
-gulp.task('move', ['clean-dist'] ,function() {
+gulp.task('move', ['clean-dist', 'get-bootstrap-font'], function () {
     return gulp.src([
         'app/**/*.*',
         '!app/scripts/**/*.*',

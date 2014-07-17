@@ -1,1 +1,20 @@
-<div>{{test}}</div>
+<div class="row class-row">
+    <div class="col-xs-2 vote-container">
+        <div>
+            <span class="glyphicon glyphicon-arrow-up"></span>
+        </div>
+        <div class="easiness-count">
+            {{info.Easiness}}
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-arrow-down"></span>
+        </div>
+    </div>
+    <div class="col-xs-6 class-id">
+        <span class="department">{{info.DepartmentID}}</span>
+        <span class="number">{{info.CourseNumber}}</span>
+    </div>
+    <div class="col-xs-4 professor">
+        {{info.ProfessorName}}
+    </div>
+</div>

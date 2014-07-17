@@ -1,8 +1,8 @@
 angular.module('myEasyClass')
     .controller('mainCtrl', ['$scope', 'userFactory', 'classesFactory', function ($scope, userFactory, classesFactory) {
         if (userFactory.data.loggedIn) {
-            $scope.test = 'OMG TRAVIS A USER IS LOGGED IN';
         }
+        $scope.navbarCollapsed = true;
         $scope.searchCriteria = {
             contentArea: {}
         };
