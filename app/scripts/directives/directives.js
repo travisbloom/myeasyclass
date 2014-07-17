@@ -1,4 +1,10 @@
         angular.module('myEasyClass')
+            .directive('mainNavbar', [function () {
+                return {
+                    templateUrl: 'templates/navbar.html',
+                    restrict: 'A'
+                }
+            }])
             .directive('sidebarInfo', [function () {
                 return {
                     templateUrl: 'templates/sidebar-info.html',

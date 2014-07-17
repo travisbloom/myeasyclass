@@ -8,21 +8,18 @@
         <link rel="stylesheet" href="main.css">
         <link href='http://fonts.googleapis.com/css?family=Permanent+Marker:400|Graduate|Schoolbell|Merriweather+Sans:300,400,700' rel='stylesheet' type='text/css'>
     </head>
-    <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-header pull-left">
-            <h1><a href="/">MyEasyClass.com</a></h1>
-        </div>
-        <div class="navbar-header pull-right">
-            <button type="button" class="btn btn-default navbar-btn">Button 1</button>
-            <button type="button" class="btn btn-default navbar-btn">Button 2</button>
-        </div>
+    <body data-ng-controller="mainCtrl">
+    <!--navbar-->
+    <div main-navbar></div>
+    <!--Alert box-->
+    <div data-ng-show="error" class="alert alert-warning alert-dismissible alert-animation" role="alert">
+        <button type="button" class="close" data-ng-click="error = null"><span aria-hidden="true">&times;</span></button>
+        <strong>{{error}}</strong>
     </div>
-    <div class="container-fluid">
-        <div class="row" data-ng-controller="mainCtrl">
+    <div data-ng-class="{headerMargin : !error}" class="container-fluid app-container">
+        <div class="row">
             <!--Sidebar-->
            <div class="col-sm-4">
-
                <div search-container></div>
                <div sidebar-info></div>
            </div>
@@ -41,7 +38,7 @@
         e=o.createElement(i);r=o.getElementsByTagName(i)[0];
         e.src='//www.google-analytics.com/analytics.js';
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-        ga('create','UA-XXXXX-X');ga('send','pageview');
+        ga('create','UA-39562701-1');ga('send','pageview');
     </script>
     <!--bower components-->
     <script src="packages.js"></script>

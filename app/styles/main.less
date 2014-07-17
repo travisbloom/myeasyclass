@@ -1,10 +1,11 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
-@icon-font-path:          "images/fonts/";
+@icon-font-path: "images/fonts/";
 @color-base: #2d4e8b;
 @navbar-height: 50px;
+@import "animation.less";
 .navbar {
   height: @navbar-height;
-  background: #000;
+  background: #fff;
   h1 {
     line-height: @navbar-height;
     margin: 0 0;
@@ -12,8 +13,17 @@
     font-family: 'Permanent Marker',cursive;
   }
 }
-.container-fluid {
-  margin-top: @navbar-height + 20px;
+.alertShow{
+
+}
+.alert{
+  height: @navbar-height;
+  text-align: center;
+}
+.app-container {
+  &.headerMargin{
+    margin-top:@navbar-height;
+  }
 }
 
 
