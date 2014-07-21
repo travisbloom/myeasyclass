@@ -1,7 +1,9 @@
 {
   "name": "myeasyclass",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "gulp-autoprefixer": "0.0.8"
+  },
   "devDependencies": {
     "gulp": "^3.6.0",
     "gulp-clean": "^0.3.1",

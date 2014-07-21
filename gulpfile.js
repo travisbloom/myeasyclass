@@ -4,6 +4,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngmin = require('gulp-ngmin');
 var clean = require('gulp-clean');
+var prefix = require('gulp-autoprefixer');
 //prevent streams from crashing on failed concats/minifications, logs out the issue and continues watching
 var plumber = require('gulp-plumber');
 var onError = function (err) {
@@ -13,15 +14,17 @@ var onError = function (err) {
 gulp.task('less', function() {
     return gulp.src('app/styles/main.less')
         .pipe(less())
+        .pipe(prefix({ cascade: true }))
         .pipe(gulp.dest('dist'));
 });
 
 //compiles bower assets in to one js file
 gulp.task('bower', function() {
     return gulp.src([
-        'app/bower_components/angular/angular.js',
         'app/bower_components/parse/index.js',
-        'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
+        'app/bower_components/angular/angular.js',
+        'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'app/bower_components/angular-animate/angular-animate.js'
     ])
         .pipe(concat('packages.js'))
 //        .pipe(ngmin())
