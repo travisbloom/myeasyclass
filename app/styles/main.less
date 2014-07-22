@@ -1,22 +1,53 @@
+/*
+External Libraries
+*/
 @import "../bower_components/bootstrap/less/bootstrap.less";
 @import (less) "../bower_components/animate.css/animate.css";
+
+/*
+Appwide variables
+*/
 @icon-font-path: "images/fonts/";
-@color-base: #2d4e8b;
+@mec-main-color: yellow;
+@mec-font-light: @gray-light;
+@mec-action: green;
 @navbar-height: 50px;
+
+/*
+App css to load first
+*/
 @import "animation.less";
+
+/*
+general app styling
+*/
+.space {
+  margin-top: 10px;
+}
+.btn-primary {
+  background-color: @mec-action;
+}
+//navbar
 .navbar {
   height: @navbar-height;
-  background: #fff;
+  background: @mec-main-color;
   h1 {
     line-height: @navbar-height;
     margin: 0 0;
     font-size: 30px;
     font-family: 'Permanent Marker',cursive;
   }
+  .navbar-collapse {
+    background-color: @mec-main-color;
+  }
+  .log-in-dropdown {
+    .dropdown-menu {
+      width: 300px;
+      padding: 10px 15px;
+    }
+  }
 }
-.alertShow{
-
-}
+//alerts
 .alert{
   z-index: 3;
   width: 100%;
@@ -31,7 +62,32 @@
   &.errorMargin{
     margin-top:@navbar-height * 2 + 20px;
   }
+  .sidebar-info{
+    //override default panel styling
+    .panel-default{
+      border: none;
+      background-color: transparent;
+      .panel-heading {
+        background-color: transparent;
+        border: none;
+        padding: 0 0;
+        margin-bottom: 10px;
+        a {
+          &:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color: @mec-font-light;
+          }
+        }
+      }
+    }
+  }
+  .search-container {
+    margin-bottom: 20px;
+  }
 }
 
-
+/*
+component specific css
+*/
 @import "class-row.less";

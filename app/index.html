@@ -19,12 +19,12 @@
     <div data-ng-class="{errorMargin : error}" class="container-fluid app-container">
         <div class="row">
             <!--Sidebar-->
-           <div class="col-sm-4">
+           <div class="col-sm-4 col-lg-offset-2 col-lg-4">
                <div search-container></div>
                <div sidebar-info></div>
            </div>
             <!--Main container-->
-            <div class="col-sm-8">
+            <div class="col-sm-8 col-lg-4">
                 <div data-ng-repeat="oneClass in classes.classesArray">
                     <div class-row info="oneClass"></div>
                 </div>

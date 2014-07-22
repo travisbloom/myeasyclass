@@ -8,7 +8,7 @@ angular.module('myEasyClass')
                 var deferred = $q.defer();
                 Parse.User.logIn(username, pw, {
                     success: function(user) {
-                        deferred.resolve(user);
+                        deferred.resolve(user.attributes);
                     },
                     error: function(user, error) {
                         deferred.reject(error);

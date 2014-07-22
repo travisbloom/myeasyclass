@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" ng-click="navCollapsed = !navCollapsed">
+            <button type="button" class="navbar-toggle" ng-click="collapsed.nav = !collapsed.nav">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -10,21 +10,28 @@
                 <h1>MyEasyClass.com</h1>
             </a>
         </div>
-        <div class="collapse navbar-collapse" collapse="navCollapsed">
+        <div class="collapse navbar-collapse" collapse="collapsed.nav">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-ng-click="toggleClassModal()">Add A Class</a></li>
                 <!--sign in dropdown for when a user isn't logged in-->
-                <li class="dropdown" data-ng-if="!user.isLoggedIn">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign In<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                <li class="dropdown log-in-dropdown" data-ng-click="$event.stopPropagation()">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span data-ng-if="user.isLoggedIn">{{user.name}}</span>
+                        <span data-ng-if="!user.isLoggedIn">Sign In</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><strong>Username:</strong></li>
+                        <li><input type="text" class="form-control" placeholder="no email required..." data-ng-model="user.name"></li>
+                        <li class="space"><strong>Password:</strong></li>
+                        <li><input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="user.pass"></li>
                         <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li class="text-center">
+                            <button class="btn btn-primary" data-ng-click="signUserIn()">Sign In</button>  Or
+                            <button class="btn btn-primary" data-ng-click="toggleSignUpModal()">Create an account</button>
+                        </li>
                     </ul>
                 </li>
-                <li data-ng-if="user.isLoggedIn">{{user.name}}</li>
             </ul>
         </div>
     </div>
