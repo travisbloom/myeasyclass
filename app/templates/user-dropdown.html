@@ -1,26 +1,9 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
     <span data-ng-if="user.name">{{user.name}}</span>
-    <span data-ng-if="!user.name">Sign In</span>
     <span class="caret"></span>
 </a>
 <ul class="dropdown-menu">
-    <!--show the sign in page dropdown if there's no user-->
-    <div data-ng-if="!user.name">
-        <li><strong>Username:</strong></li>
-        <li><input type="text" class="form-control" placeholder="no email required..." data-ng-model="signIn.username"></li>
-        <li class="space"><strong>Password:</strong></li>
-        <li><input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="signIn.pass"></li>
-        <li class="divider"></li>
-        <li class="buttons">
-            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="signUserIn()">Sign In</button>
-            <span>Or</span>
-            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="toggleSignUpModal()">Create an account</button>
-        </li>
-    </div>
-    <!--show the logout button if there is a user-->
-    <div data-ng-if="user.name">
-        <li >
-            <button class="btn btn-primary" data-ng-click="logOut()">Sign Out</button>
-        </li>
-    </div>
+    <li >
+        <button class="btn btn-primary" data-ng-click="logOut()">Sign Out</button>
+    </li>
 </ul>

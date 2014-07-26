@@ -13,9 +13,9 @@
                     restrict: 'E'
                 }
             }])
-            .directive('searchContainer', [function () {
+            .directive('sidebarSearch', [function () {
                 return {
-                    templateUrl: 'templates/search-container.html',
+                    templateUrl: 'templates/sidebar-search.html',
                     restrict: 'E'
                 }
             }])

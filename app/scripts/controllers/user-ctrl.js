@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .controller('userCtrl', ['$scope', 'userFactory', 'globalFactory', function ($scope, userFactory, globalFactory) {
+    .controller('userCtrl', ['$scope', 'userFactory', function ($scope, userFactory) {
         //initialize user
         $scope.user = {};
         $scope.signIn = {};
@@ -14,10 +14,10 @@ angular.module('myEasyClass')
             userFactory.logIn($scope.signIn.username, $scope.signIn.pass).then(function (data) {
             }, function(err){
                 if (err.message = "invalid login parameters") {
-                    globalFactory.broadcastError('Looks like that username or password doesn\'t exist. If you\'re new here, click the "Sign Up" button to create an account.');
+                    $scope.error = 'Looks like that username or password doesn\'t exist. If you\'re new here, click the "Create An Account" Button';
                 //catch any other error returned
                 } else {
-                    $scope.error = globalFactory.error.genericError;
+                    $scope.error = 'We couldn\'t complete your request. The site failed harder than <a href="http://www.youtube.com/watch?v=Awf45u6zrP0">this cat...</a>';
                 }
             });
         };

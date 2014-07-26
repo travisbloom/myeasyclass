@@ -25,8 +25,19 @@
             <div class="collapse navbar-collapse" collapse="collapsed.nav">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" data-ng-click="toggleClassModal()">Add A Class</a></li>
-                    <!--dropdown to login/logout-->
-                    <li class="dropdown" data-ng-click="$event.stopPropagation()" user-dropdown></li>
+                    <li><a href="#" data-ng-click="toggleSignInModal()" data-ng-if="!user.name">Sign In</a></li>
+                    <!--dropdown to logout-->
+                    <li class="dropdown" data-ng-click="$event.stopPropagation()" data-ng-if="user.name">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span data-ng-if="user.name">{{user.name}}</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li >
+                                <button class="btn btn-primary" data-ng-click="logOut()">Sign Out</button>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -41,7 +52,7 @@
             <!--Sidebar-->
            <div class="col-sm-6 col-md-offset-3 col-md-3">
                <div class="fixed-sidebar">
-                   <search-container></search-container>
+                   <sidebar-search></sidebar-search>
                    <sidebar-info></sidebar-info>
                </div>
            </div>

@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .controller('mainCtrl', ['$scope', 'globalFactory', 'classesFactory', '$modal', function ($scope, globalFactory, classesFactory, $modal) {
+    .controller('mainCtrl', ['$scope', 'classesFactory', 'userFactory', '$modal', function ($scope, classesFactory, userFactory, $modal) {
         //default state for all collapsed elements
         $scope.collapsed = {
             nav: true,
@@ -15,22 +15,25 @@ angular.module('myEasyClass')
             }
         };
         /**
-        * Watches for errorUpdate to be triggered on the rootScope, grabs the new error message in the factory
+         * Checks for a current user on page load
         * */
-        $scope.$on('errorUpdate', function(){
-            $scope.error = globalFactory.error.status;
+        userFactory.currentUser().then(function(username){
+            $scope.user = {
+                name: username
+            }
+        }, function (){
+            $scope.user = {}
         });
-        
         $scope.toggleClassModal = function () {
             console.log($scope.error);
 //            $scope.error = 'hello world!'
         };
-//        $scope.toggleSignUpModal = function () {
-//            var signUpModal = $modal.open({
-//                templateUrl: 'templates/sign-up-modal.html',
-//                controller: 'signUpModalCtrl'
-//            });
-//        };
+        $scope.toggleSignInModal = function () {
+            var signUpModal = $modal.open({
+                templateUrl: 'templates/modal-sign-in.html',
+                controller: 'userCtrl'
+            });
+        };
 
         classesFactory.getClasses().then(function(data){
             $scope.classes = data;
