@@ -17,6 +17,14 @@
       font-size: 30px;
       font-family: 'Permanent Marker',cursive;
     }
+    /*
+    prevents awkward title on small screens
+    */
+    @media screen and (max-width: 325px) {
+      h1 {
+        font-size:20px;
+      }
+    }
   }
 
   .navbar-collapse {
@@ -33,6 +41,12 @@
       padding: 10px 15px;
       color: @mec-main-darkest-color;
       background: @mec-main-color;
+      .buttons {
+        text-align: center;
+        span {
+          margin: 0 16px;
+        }
+      }
     }
   }
 }

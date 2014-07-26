@@ -39,14 +39,25 @@
     <div data-ng-class="{errorMargin : error}" class="container-fluid app-container">
         <div class="row">
             <!--Sidebar-->
-           <div class="col-sm-4 col-lg-offset-3 col-lg-3">
-               <search-container></search-container>
-               <sidebar-info></sidebar-info>
+           <div class="col-sm-6 col-md-offset-3 col-md-3">
+               <div class="fixed-sidebar">
+                   <search-container></search-container>
+                   <sidebar-info></sidebar-info>
+               </div>
            </div>
             <!--Main container-->
-            <div class="col-sm-8 col-lg-3">
+            <div class="col-sm-6 col-md-3">
                 <div data-ng-repeat="oneClass in classes.classesArray">
                     <class-row info="oneClass"></class-row>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    Made by <a href="http://travisbloom.me/">Travis Bloom</a>, a UConn Class of 2013 Grad who was tired of of his newsfeed being spammed by people asking for an easy class
                 </div>
             </div>
         </div>

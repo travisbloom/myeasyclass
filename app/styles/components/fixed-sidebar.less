@@ -1,0 +1,34 @@
+.fixed-sidebar {
+  position: fixed;
+  width: inherit;
+  padding-right: 15px;
+  .sidebar-info {
+    color: @mec-main-darkest-color;
+    //override default panel styling
+    .panel-default {
+      border: none;
+      background-color: transparent;
+      .panel-heading {
+        background-color: transparent;
+        border: none;
+        padding: 0 0;
+        margin-bottom: 10px;
+        a {
+          &:hover {
+            cursor: pointer;
+            color: @mec-main-darker-color;
+          }
+        }
+      }
+    }
+  }
+  .search-container {
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: @screen-sm-min) {
+  .fixed-sidebar {
+    position: relative;
+    padding-right: 0;
+  }
+}

@@ -3,7 +3,15 @@ External Libraries
 */
 @import "../bower_components/bootstrap/less/bootstrap.less";
 @import (less) "../bower_components/animate.css/animate.css";
-
+/*
+Override bootstrap variables
+*/
+//originally at 768px
+@grid-float-breakpoint: 500px;
+//originally at 768px
+@screen-sm-min: 530px;
+//originally at 992px
+//@screen-md-min:768px;
 /*
 Appwide variables
 */
@@ -14,6 +22,7 @@ Appwide variables
 @mec-secondary-color: #3498DB;
 @mec-action-color: #E74C3C;
 @navbar-height: 50px;
+@footer-height: 50px;
 
 /*
 App css to load first
@@ -23,9 +32,14 @@ App css to load first
 /*
 general app styling
 */
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
   color: @mec-main-darker-color;
   background-color: @mec-main-color;
+  margin-bottom: @footer-height + 20px;
 }
 .space {
   margin-top: 10px;
@@ -56,33 +70,22 @@ a {
   &.errorMargin{
     margin-top:@navbar-height * 2 + 20px;
   }
-  .sidebar-info{
-    color: @mec-main-darkest-color;
-    //override default panel styling
-    .panel-default{
-      border: none;
-      background-color: transparent;
-      .panel-heading {
-        background-color: transparent;
-        border: none;
-        padding: 0 0;
-        margin-bottom: 10px;
-        a {
-          &:hover {
-            cursor: pointer;
-            color: @mec-main-darker-color;
-          }
-        }
-      }
-    }
-  }
-  .search-container {
-    margin-bottom: 20px;
-  }
 }
 
+.footer {
+  padding: 5px 0;
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: @footer-height;
+  background-color: @mec-main-color;
+  text-align: center;
+  border-top:solid 1px @mec-main-darkest-color;
+}
 /*
 component specific css
 */
+@import "components/fixed-sidebar.less";
 @import "components/class-row.less";
 @import "components/navbar.less";

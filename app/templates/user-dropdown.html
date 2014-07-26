@@ -11,8 +11,9 @@
         <li class="space"><strong>Password:</strong></li>
         <li><input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="signIn.pass"></li>
         <li class="divider"></li>
-        <li class="text-center">
-            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="signUserIn()">Sign In</button>  Or
+        <li class="buttons">
+            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="signUserIn()">Sign In</button>
+            <span>Or</span>
             <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="toggleSignUpModal()">Create an account</button>
         </li>
     </div>
