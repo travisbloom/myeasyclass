@@ -1,0 +1,38 @@
+.navbar {
+  color: @mec-main-color;
+  height: @navbar-height;
+  background: @mec-main-darkest-color;
+  a {
+    color: @mec-main-color;
+    &:hover {
+      color: @mec-main-darkest-color;
+      background: @mec-main-color;
+      h1 {
+        color: @mec-main-color;
+      }
+    }
+    h1 {
+      line-height: @navbar-height;
+      margin: 0 0;
+      font-size: 30px;
+      font-family: 'Permanent Marker',cursive;
+    }
+  }
+
+  .navbar-collapse {
+    background-color: @mec-main-darkest-color;
+  }
+  .dropdown {
+    &.open {
+      .dropdown-toggle {
+        color:@mec-main-darkest-color;
+      }
+    }
+    .dropdown-menu {
+      width: 300px;
+      padding: 10px 15px;
+      color: @mec-main-darkest-color;
+      background: @mec-main-color;
+    }
+  }
+}

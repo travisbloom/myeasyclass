@@ -1,20 +1,22 @@
         angular.module('myEasyClass')
-            .directive('mainNavbar', [function () {
+            .directive('userDropdown', [function () {
                 return {
-                    templateUrl: 'templates/navbar.html',
-                    restrict: 'A'
+                    templateUrl: 'templates/user-dropdown.html',
+                    scope: true,
+                    controller: 'userCtrl',
+                    restrict: 'AE'
                 }
             }])
             .directive('sidebarInfo', [function () {
                 return {
                     templateUrl: 'templates/sidebar-info.html',
-                    restrict: 'A'
+                    restrict: 'E'
                 }
             }])
             .directive('searchContainer', [function () {
                 return {
                     templateUrl: 'templates/search-container.html',
-                    restrict: 'A'
+                    restrict: 'E'
                 }
             }])
             .directive('classRow', [function () {
@@ -24,6 +26,6 @@
                     },
                     controller: 'individualClassController',
                     templateUrl: 'templates/class.html',
-                    restrict: 'A'
+                    restrict: 'E'
                 }
             }]);

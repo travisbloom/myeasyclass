@@ -10,7 +10,27 @@
     </head>
     <body data-ng-controller="mainCtrl">
     <!--navbar-->
-    <div main-navbar></div>
+    <nav class="navbar navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" ng-click="collapsed.nav = !collapsed.nav">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a data-ng-href="index.html">
+                    <h1>MyEasyClass.com</h1>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" collapse="collapsed.nav">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" data-ng-click="toggleClassModal()">Add A Class</a></li>
+                    <!--dropdown to login/logout-->
+                    <li class="dropdown" data-ng-click="$event.stopPropagation()" user-dropdown></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <!--Alert box-->
     <div data-ng-show="error" class="alert alert-warning alert-dismissible alert-animation" role="alert">
         <button type="button" class="close" data-ng-click="error = undefined"><span aria-hidden="true">&times;</span></button>
@@ -19,14 +39,14 @@
     <div data-ng-class="{errorMargin : error}" class="container-fluid app-container">
         <div class="row">
             <!--Sidebar-->
-           <div class="col-sm-4 col-lg-offset-2 col-lg-4">
-               <div search-container></div>
-               <div sidebar-info></div>
+           <div class="col-sm-4 col-lg-offset-3 col-lg-3">
+               <search-container></search-container>
+               <sidebar-info></sidebar-info>
            </div>
             <!--Main container-->
-            <div class="col-sm-8 col-lg-4">
+            <div class="col-sm-8 col-lg-3">
                 <div data-ng-repeat="oneClass in classes.classesArray">
-                    <div class-row info="oneClass"></div>
+                    <class-row info="oneClass"></class-row>
                 </div>
             </div>
         </div>

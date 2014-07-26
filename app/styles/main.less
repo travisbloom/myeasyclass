@@ -8,9 +8,11 @@ External Libraries
 Appwide variables
 */
 @icon-font-path: "images/fonts/";
-@mec-main-color: yellow;
-@mec-font-light: @gray-light;
-@mec-action: green;
+@mec-main-color: #ECF0F1;
+@mec-main-darker-color: #646464;
+@mec-main-darkest-color: #2C3E50;
+@mec-secondary-color: #3498DB;
+@mec-action-color: #E74C3C;
 @navbar-height: 50px;
 
 /*
@@ -21,30 +23,22 @@ App css to load first
 /*
 general app styling
 */
+body {
+  color: @mec-main-darker-color;
+  background-color: @mec-main-color;
+}
 .space {
   margin-top: 10px;
 }
 .btn-primary {
-  background-color: @mec-action;
+  background-color: @mec-action-color;
 }
-//navbar
-.navbar {
-  height: @navbar-height;
-  background: @mec-main-color;
-  h1 {
-    line-height: @navbar-height;
-    margin: 0 0;
-    font-size: 30px;
-    font-family: 'Permanent Marker',cursive;
+a {
+  &:hover {
+    text-decoration: none;
   }
-  .navbar-collapse {
-    background-color: @mec-main-color;
-  }
-  .log-in-dropdown {
-    .dropdown-menu {
-      width: 300px;
-      padding: 10px 15px;
-    }
+  &:focus {
+    text-decoration: none;
   }
 }
 //alerts
@@ -63,6 +57,7 @@ general app styling
     margin-top:@navbar-height * 2 + 20px;
   }
   .sidebar-info{
+    color: @mec-main-darkest-color;
     //override default panel styling
     .panel-default{
       border: none;
@@ -75,8 +70,7 @@ general app styling
         a {
           &:hover {
             cursor: pointer;
-            text-decoration: none;
-            color: @mec-font-light;
+            color: @mec-main-darker-color;
           }
         }
       }
@@ -90,4 +84,5 @@ general app styling
 /*
 component specific css
 */
-@import "class-row.less";
+@import "components/class-row.less";
+@import "components/navbar.less";

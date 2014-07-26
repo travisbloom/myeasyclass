@@ -5,16 +5,18 @@ var uglify = require('gulp-uglify');
 var ngmin = require('gulp-ngmin');
 var clean = require('gulp-clean');
 var prefix = require('gulp-autoprefixer');
-//prevent streams from crashing on failed concats/minifications, logs out the issue and continues watching
-var plumber = require('gulp-plumber');
+//var livereload = require('gulp-livereload');
 var onError = function (err) {
-  console.log(err);
+    console.log('Gulp Error: ');
+    console.log(err);
 };
 //compiles less
 gulp.task('less', function() {
     return gulp.src('app/styles/main.less')
         .pipe(less())
+        .on('error', onError)
         .pipe(prefix({ cascade: true }))
+        .on('error', onError)
         .pipe(gulp.dest('dist'));
 });
 
@@ -40,6 +42,7 @@ gulp.task('js', function() {
         'app/scripts/**/*.js'
     ])
         .pipe(concat('app.js'))
+        .on('error', onError)
 //        .pipe(ngmin())
 //        .pipe(uglify())
         .pipe(gulp.dest('dist'));
@@ -59,7 +62,7 @@ gulp.task('get-bootstrap-font', function () {
         .pipe(gulp.dest('dist/images/fonts'));
 });
 //moves assets not touched by gulp to dist folder
-gulp.task('move', ['clean-dist', 'get-bootstrap-font'], function () {
+gulp.task('move', function () {
     return gulp.src([
         'app/**/*.*',
         '!app/scripts/**/*.*',
@@ -70,10 +73,12 @@ gulp.task('move', ['clean-dist', 'get-bootstrap-font'], function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['move', 'less', 'js', 'bower']);
+gulp.task('build', ['clean-dist', 'get-bootstrap-font', 'move', 'less', 'js', 'bower']);
 
 //watch for changes and recompile
-gulp.task('watch', ['less'], function () {
+gulp.task('watch', ['build'], function () {
     gulp.watch('app/styles/**/*.less', ['less']);
-    gulp.watch('app/scripts/*.js', ['js']);
+    gulp.watch('app/scripts/**/*.js', ['js']);
+    gulp.watch('app/templates/**/*.html', ['move']);
+    gulp.watch('app/index.html', ['move']);
 });
