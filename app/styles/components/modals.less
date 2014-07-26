@@ -1,3 +1,28 @@
-.modal {
-  padding: 15px 15px;
+@modal-header-height: 60px;
+.mec-modal {
+  .header {
+    height: @modal-header-height;
+    line-height: @modal-header-height - 20px;
+    position: absolute;
+    top:0;
+    padding: 10px 10px;
+    z-index: 5;
+    width: 100%;
+    background: @mec-main-darkest-color;
+    color: @mec-main-color;
+    h3 {
+
+    }
+  }
+  .alert {
+    top: @modal-header-height;
+    height: @modal-header-height;
+  }
+  .modal-body{
+    transition: all 1s;
+    margin-top: @modal-header-height + 10px;
+    &.errorMargin{
+      margin-top:@modal-header-height * 2 + 10px;
+    }
+  }
 }

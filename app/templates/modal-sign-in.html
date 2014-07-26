@@ -1,15 +1,23 @@
-<div class="modal-header">
-    <h3 class="modal-title">Login</h3>
-</div>
-<div class="modal-body">
-    <ul>
-        <li ng-repeat="item in items">
-            <a ng-click="selected.item = item">{{ item }}</a>
-        </li>
-    </ul>
-    Selected: <b>{{ selected.item }}</b>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+<div class="mec-modal">
+    <div class="header">
+        <h3 class="modal-title">Login</h3>
+    </div>
+    <!--modal error-->
+    <div data-ng-show="error" class="alert alert-warning alert-dismissible alert-animation">
+        <button type="button" class="close" data-ng-click="error = false"><span aria-hidden="true">&times;</span></button>
+        <strong>{{error}}</strong>
+    </div>
+    <div class="modal-body" data-ng-class="{errorMargin : error}">
+        <div><strong>Username:</strong></div>
+        <div><input type="text" class="form-control" placeholder="no email required..." data-ng-model="signIn.username"></div>
+        <div class="space"><strong>Password:</strong></div>
+        <div><input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="signIn.pass"></div>
+    </div>
+    <div class="modal-footer">
+        <div class="buttons">
+            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="signUserIn()">Sign In</button>
+            <span>Or</span>
+            <button class="btn btn-primary" data-ng-disabled="!signIn.username || !signIn.pass" data-ng-click="signUserUp()">Create an account</button>
+        </div>
+    </div>
 </div>
