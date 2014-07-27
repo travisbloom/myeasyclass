@@ -65,24 +65,23 @@ angular.module('myEasyClass')
          * pull in classes and map their respective relationships with the user if signed in
          **/
         classesFactory.getClasses().then(function(data) {
-            var classCounter, rankedCounter, dislikesCounter, classes;
+            var classCounter, rankedCounter, dislikesCounter;
             $scope.classes = data;
             console.log($scope.classes);
             //grabs the users relations and map them to their respective class
             userRelations().then(function () {
-                classes = $scope.classes.classesArray;
                 //for each class
-                for (classCounter = 0; classCounter < classes.length; classCounter ++){
+                for (classCounter = 0; classCounter < $scope.classes.length; classCounter ++) {
                     //for each string in the ranked relation
                     for (rankedCounter = 0; rankedCounter < $scope.user.relations.ranked.length; rankedCounter++) {
-                        if (classes[classCounter].id === $scope.user.relations.ranked[rankedCounter]) {
-                            classes[classCounter].likedByCurrentUser = true;
+                        if ($scope.classes[classCounter].id === $scope.user.relations.ranked[rankedCounter]) {
+                            $scope.classes[classCounter].likedByCurrentUser = true;
                         }
                     }
                     //for each string in the dislikes relation
                     for (dislikesCounter = 0; dislikesCounter < $scope.user.relations.dislikes.length; dislikesCounter++) {
-                        if (classes[classCounter].id === $scope.user.relations.dislikes[dislikesCounter]) {
-                            classes[classCounter].dislikedByCurrentUser = true;
+                        if ($scope.classes[classCounter].id === $scope.user.relations.dislikes[dislikesCounter]) {
+                            $scope.classes[classCounter].dislikedByCurrentUser = true;
                         }
                     }
                 }
