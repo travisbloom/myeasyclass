@@ -6,7 +6,6 @@ angular.module('myEasyClass')
             getClasses: function () {
                 var query, counter, classesArray = [], classesObj = {}, newResult, deferred = $q.defer(), course;
                 if (classesFactory.angularClasses) {
-                    console.log('hteresd');
                     return classesFactory.angularClasses;
                 } else {
                     course = Parse.Object.extend("Course");
@@ -30,7 +29,6 @@ angular.module('myEasyClass')
                         },
                         error: function (err) {
                             deferred.reject();
-                            console.log('error');
                         }
                     });
                     return deferred.promise;
