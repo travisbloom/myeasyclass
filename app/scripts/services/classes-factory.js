@@ -1,8 +1,6 @@
 angular.module('myEasyClass')
     .factory('classesFactory', ['$q', function ($q) {
         var classesFactory = {
-            data: {
-            },
             getClasses: function () {
                 var query, counter, reponse, classesArray = [], classesObj = {}, newResult, deferred = $q.defer(),
                     course = Parse.Object.extend("Course");
@@ -16,9 +14,9 @@ angular.module('myEasyClass')
                            //add the class to the responseArray
                            newResult = results[counter].attributes;
                            newResult.id = results[counter].id;
-                            classesArray.push(newResult);
+                           classesArray.push(newResult);
                            //add the class to the responseObj
-                            classesObj[results[counter].id] = results[counter].attributes;
+                           classesObj[results[counter].id] = results[counter].attributes;
                         }
                         reponse = {
                             'classesArray': classesArray,
@@ -32,7 +30,8 @@ angular.module('myEasyClass')
                     }
                 });
                 return deferred.promise;
-            }
+            },
+            getLikes
         };
         return classesFactory;
     }]);

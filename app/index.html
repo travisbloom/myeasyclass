@@ -44,19 +44,24 @@
     </nav>
     <!--Alert box-->
     <div data-ng-show="error" class="alert alert-warning alert-dismissible alert-animation">
-        <button type="button" class="close" data-ng-click="error = undefined"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-ng-click="error = null"><span>&times;</span></button>
         <strong>{{error}}</strong>
     </div>
-    <div data-ng-class="{errorMargin : error}" class="container-fluid app-container">
+    <!--Info box-->
+    <div data-ng-show="success" class="alert alert-success alert-dismissible alert-animation">
+        <button type="button" class="close" data-ng-click="success = null"><span>&times;</span></button>
+        <strong>{{success}}</strong>
+    </div>
+    <div data-ng-class="{errorMargin : error || success}" class="container-fluid app-container">
         <div class="row">
             <div class="col-md-offset-3 col-md-6 col-sm-12">
-                <h3>Top Rated Classes at UConn</h3>
+                <h2>Top Rated Classes at UConn</h2>
             </div>
         </div>
         <div class="row">
             <!--Sidebar-->
            <div class="col-sm-6 col-md-offset-3 col-md-3">
-               <div class="fixed-sidebar">
+               <div class="fixed-sidebar" data-offset-top="-60" bs-affix>
                    <sidebar-search></sidebar-search>
                    <sidebar-info></sidebar-info>
                </div>

@@ -26,11 +26,12 @@ gulp.task('bower', function() {
         'app/bower_components/parse/index.js',
         'app/bower_components/angular/angular.js',
         'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-        'app/bower_components/angular-animate/angular-animate.js'
+        'app/bower_components/angular-animate/angular-animate.js',
+        'app/bower_components/angular-strap/src/affix/affix.js',
+        'app/bower_components/angular-strap/src/helpers/dimensions.js',
+        'app/bower_components/angular-strap/src/helpers/debounce.js'
     ])
         .pipe(concat('packages.js'))
-//        .pipe(ngmin())
-//        .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });
 
@@ -43,8 +44,6 @@ gulp.task('js', function() {
     ])
         .pipe(concat('app.js'))
         .on('error', onError)
-//        .pipe(ngmin())
-//        .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });
 
@@ -82,3 +81,19 @@ gulp.task('watch', ['build'], function () {
     gulp.watch('app/templates/**/*.html', ['move']);
     gulp.watch('app/index.html', ['move']);
 });
+
+
+/**
+ * Production Tasks
+ * */
+gulp.task('prod-js', function() {
+    return gulp.src([
+        'dist/packages.js',
+        'dist/app.js'
+    ])
+        .pipe(ngmin())
+        .pipe(uglify())
+        .pipe(gulp.dest('dist'));
+});
+
+ gulp.task('prod', ['build', 'prod-js']);

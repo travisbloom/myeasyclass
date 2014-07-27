@@ -1,5 +1,6 @@
 angular.module('myEasyClass')
     .controller('mainCtrl', ['$scope', 'classesFactory', 'userFactory', '$modal', function ($scope, classesFactory, userFactory, $modal) {
+        var userStatus;
         //default state for all collapsed elements
         $scope.collapsed = {
             nav: true,
@@ -17,21 +18,38 @@ angular.module('myEasyClass')
         /**
          * Checks for a current user on page load
         * */
-        userFactory.currentUser().then(function(username){
-            $scope.user = {
-                name: username
-            }
-        }, function (){
-            $scope.user = {}
-        });
+        userStatus = function () {
+            userFactory.currentUser().then(function (username) {
+                $scope.user = {
+                    name: username
+                }
+            }, function () {
+                $scope.user = {}
+            });
+        };
+        userStatus();
+        /**
+         * Logs the user out
+         * */
+        $scope.logOut = function () {
+            userFactory.logOut().then(function(){
+                userStatus();
+            });
+        };
+
         $scope.toggleClassModal = function () {
             console.log($scope.error);
-//            $scope.error = 'hello world!'
+            $scope.error = 'hello world!'
         };
         $scope.toggleSignInModal = function () {
             var signUpModal = $modal.open({
                 templateUrl: 'templates/modal-sign-in.html',
                 controller: 'userCtrl'
+            });
+            signUpModal.result.then(function (signUpResponse) {
+                console.log('new data!');
+                console.log(signUpResponse);
+                $scope.success = signUpResponse;
             });
         };
 
