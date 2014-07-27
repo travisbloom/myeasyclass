@@ -22,7 +22,12 @@ angular.module('myEasyClass')
             userFactory.currentUser().then(function (username) {
                 $scope.user = {
                     name: username
-                }
+                };
+                userFactory.getRelations(['ranked', 'dislikes']).then (function(data) {
+                    console.log(data);
+                }, function (err) {
+                    $scope.error = 'There was an error figuring out what classes you have voted on';
+                });
             }, function () {
                 $scope.user = {}
             });

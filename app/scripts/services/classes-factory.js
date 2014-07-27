@@ -30,8 +30,7 @@ angular.module('myEasyClass')
                     }
                 });
                 return deferred.promise;
-            },
-            getLikes
+            }
         };
         return classesFactory;
     }]);

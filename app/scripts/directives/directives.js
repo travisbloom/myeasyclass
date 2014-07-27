@@ -22,7 +22,9 @@
             .directive('classRow', [function () {
                 return {
                     scope: {
-                      info: '='
+                      info: '=',
+                      error: '=',
+                      success: '='
                     },
                     controller: 'individualClassController',
                     templateUrl: 'templates/class.html',
