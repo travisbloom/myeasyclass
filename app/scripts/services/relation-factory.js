@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .factory('relationFactory', ['$q', function ($q) {
+    .factory('relationFactory', ['$q', 'userFactory', 'classesFactory', function ($q, userFactory, classesFactory)  {
          /**
          * accepts a string that matches the relationship in Parse
          * returns a promise with the requested relationships
@@ -48,6 +48,26 @@ angular.module('myEasyClass')
                 }
                 //return the array of promises once they have all been resolved
                 return $q.all(returnedPromises);
+            },
+            vote: function (preference, classId) {
+                var relation,
+                    currentUser = userFactory.data.parseUser,
+                    currentClass = classesFactory.parseClasses[classId];
+
+                console.log(currentClass);
+                //increment Easiness for course
+                if(preference === 'liked'){
+                    currentClass.increment("Easiness");
+                    relation = currentUser.relation("ranked");
+                } else {
+                    currentClass.increment("Easiness", -1);
+                    relation = currentUser.relation("dislikes");
+                }
+                currentClass.save();
+
+                //create a relationship between the user and the course
+                relation.add(currentClass);
+                currentUser.save();
             }
         };
         return parseRelations;

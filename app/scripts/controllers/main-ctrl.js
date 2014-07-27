@@ -11,11 +11,11 @@ angular.module('myEasyClass')
             var counter, deferred = $q.defer();
             userFactory.currentUser().then(function () {
                 relationFactory.getRelations(['ranked', 'dislikes']).then (function(data) {
+                    console.log(data);
                     //adds each relationship type to $scope.user.relations
                     for (counter = 0; counter < data.length; counter++) {
                         $scope.user.relations[data[counter].rel] = data[counter].relatedIds;
                     }
-                    console.log($scope.user.relations);
                     deferred.resolve();
                 }, function (err) {
                     $scope.error = 'There was an error figuring out what classes you have voted on';
@@ -67,7 +67,6 @@ angular.module('myEasyClass')
         classesFactory.getClasses().then(function(data) {
             var classCounter, rankedCounter, dislikesCounter;
             $scope.classes = data;
-            console.log($scope.classes);
             //grabs the users relations and map them to their respective class
             userRelations().then(function () {
                 //for each class
@@ -115,6 +114,8 @@ angular.module('myEasyClass')
                 console.log('new data!');
                 console.log(signUpResponse);
                 $scope.success = signUpResponse;
+                $scope.error = false;
+                userStatus();
             });
         };
 }]);
