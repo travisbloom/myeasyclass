@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .controller('mainCtrl', ['$scope', 'classesFactory', 'userFactory', '$modal', '$q', function ($scope, classesFactory, userFactory, $modal, $q) {
+    .controller('mainCtrl', ['$scope', 'classesFactory', 'relationFactory', 'userFactory', '$modal', '$q', function ($scope, classesFactory, relationFactory, userFactory, $modal, $q) {
         var userStatus, userRelations;
 
         /**
@@ -10,7 +10,7 @@ angular.module('myEasyClass')
         userRelations = function () {
             var counter, deferred = $q.defer();
             userFactory.currentUser().then(function () {
-                userFactory.getRelations(['ranked', 'dislikes']).then (function(data) {
+                relationFactory.getRelations(['ranked', 'dislikes']).then (function(data) {
                     //adds each relationship type to $scope.user.relations
                     for (counter = 0; counter < data.length; counter++) {
                         $scope.user.relations[data[counter].rel] = data[counter].relatedIds;
