@@ -22,7 +22,6 @@ angular.module('myEasyClass')
                         for (counter = 0; counter < classes.length; counter ++) {
                             returnedArray.push(classes[counter].id);
                         }
-                        console.log(returnedArray);
                         deferred.resolve({rel: relation, relatedIds: returnedArray});
                     },
                     error: function(error) {
@@ -33,39 +32,28 @@ angular.module('myEasyClass')
             },
             /**
              * accepts an array of relation fields to check
-             * runs parseUser.currentUser to ensure there is a logged in user
              * iterates through the relations array, running queryRelation() for each
-             * returns an object with arrays of Ids for each relation
+             * returns an array of the promises
             * */
             getRelations: function (relationsArray) {
-                var deferred = $q.defer(), counter, relationshipObj = {}, error = false;
-                //check that a user is logged in
-                parseUser.currentUser().then(function () {
-                    console.log('current user');
-                    //iterate through the passed relationships
-                    for (counter = 0; counter < relationsArray.length; counter++) {
-                        console.log(relationsArray[counter]);
+                var counter, returnedPromises = [];
+                console.log('current user');
+                //iterate through the passed relationships
+                for (counter = 0; counter < relationsArray.length; counter++) {
+                   //create an anon function to wrap the individual promises
+                    (function() {
+                        var deferred = $q.defer();
                         parseUser.queryRelation(relationsArray[counter]).then(function (data) {
                             //set the attribute of the relationshipObj to the relation string, add the array as the value
-                            relationshipObj[data.rel] = data.relatedIds;
+                            deferred.resolve(data);
                         }, function (err) {
-                            error = true;
-                            //if one of the relationship queries errors out
-                            relationshipObj[relationsArray[counter]] = {
-                                error: err
-                            }
+                            deferred.reject({error: err});
                         });
-                    }
-                    //if none of the queries errored out
-                    if (!error) {
-                        deferred.resolve(relationshipObj);
-                    } else {
-                        deferred.reject(relationshipObj);
-                    }
-                }, function() {
-                    deferred.reject('No user is currently logged in');
-                 });
-                return deferred.promise;
+                        returnedPromises.push(deferred.promise);
+                    })();
+                }
+                //return the array of promises once they have all been resolved
+                return $q.all(returnedPromises);
             },
             currentUser: function () {
                 var deferred = $q.defer();

@@ -1,13 +1,15 @@
 <div class="row class-row">
     <div class="col-xs-2 vote-container text-center">
         <div>
-            <span class="glyphicon glyphicon-arrow-up"></span>
+            <span data-ng-if="info.likedByCurrentUser" class="glyphicon glyphicon-arrow-up liked"></span>
+            <span data-ng-if="!info.likedByCurrentUser" class="glyphicon glyphicon-arrow-up"></span>
         </div>
         <div class="easiness-count">
             {{info.Easiness}}
         </div>
         <div>
-            <span class="glyphicon glyphicon-arrow-down"></span>
+            <span data-ng-if="info.dislikedByCurrentUser" class="glyphicon glyphicon-arrow-down disliked"></span>
+            <span data-ng-if="!info.dislikedByCurrentUser" class="glyphicon glyphicon-arrow-down"></span>
         </div>
     </div>
     <div class="col-xs-10 class-id">
