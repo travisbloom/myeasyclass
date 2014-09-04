@@ -1,8 +1,8 @@
 angular.module('myEasyClass')
-    .controller('individualClassController', ['$scope', 'userFactory', 'relationFactory', function ($scope, userFactory, relationFactory) {
-        console.log($scope.error);
+    .controller('individualClassController', ['$scope', 'userFactory', 'relationFactory', '$rootScope', function ($scope, userFactory, relationFactory, $rootScope) {
+        console.log($scope.info);
         $scope.vote = function (preference, classId) {
-            console.log('trig');
+            console.log($scope.info);
             if (userFactory.data.username) {
                 //add increments the class easiness count and adds a user relation
                 relationFactory.vote(preference, classId);
@@ -15,7 +15,8 @@ angular.module('myEasyClass')
                 }
             } else {
                 console.log('errror');
-                $scope.error = "You need to log in before you can vote on classes!"
+                $rootScope.error = "You need to log in before you can vote on classes!";
+                console.log($scope.error)
             }
         }
     }]);

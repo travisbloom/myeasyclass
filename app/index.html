@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>MyEasyClass</title>
-        <meta name="description" content="">
+        <meta name="author" content="Travis Bloom">
+        <meta name="description" content="Your Own Personal Course Advisor">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="main.css">
         <link href='http://fonts.googleapis.com/css?family=Permanent+Marker:400|Graduate|Schoolbell|Merriweather+Sans:300,400,700' rel='stylesheet' type='text/css'>
@@ -18,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a data-ng-href="index.html">
+                <a data-ng-href="index.html" class="pulse">
                     <h1>MyEasyClass.com</h1>
                 </a>
             </div>
@@ -68,12 +69,11 @@
            </div>
             <!--Main container-->
             <div class="col-sm-6 col-md-3">
-                <div data-ng-repeat="oneClass in classes">
-                    <class-row info="oneClass" error="error" success="success"></class-row>
-                </div>
+                <class-row data-ng-repeat="oneClass in classes" info="oneClass" alertFn="updateAlert()"></class-row>
             </div>
         </div>
     </div>
+    <!--footer-->
     <div class="footer">
         <div class="container">
             <div class="row">

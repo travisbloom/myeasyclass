@@ -1,16 +1,20 @@
 angular.module('myEasyClass')
-    .factory('classesFactory', ['$q', function ($q) {
+    .factory('classesFactory', ['$q', 'userFactory', function ($q, userFactory) {
         var classesFactory = {
             parseClasses: null,
             angularClasses: null,
+            /**
+             * adds relation data to classes pulled from the parseClasses function
+            * */
             getClasses: function () {
                 var query, counter, classesArray = [], classesObj = {}, newResult, deferred = $q.defer(), course;
+                //if the classes have already been loaded
                 if (classesFactory.angularClasses) {
                     return classesFactory.angularClasses;
                 } else {
                     course = Parse.Object.extend("Course");
                     query = new Parse.Query(course);
-                    query.limit = 300;
+                    query.limit(100);
                     query.descending('Easiness');
                     query.find({
                         success: function (results) {
@@ -27,7 +31,7 @@ angular.module('myEasyClass')
                             classesFactory.angularClasses = classesArray;
                             deferred.resolve(classesArray);
                         },
-                        error: function (err) {
+                        error: function () {
                             deferred.reject();
                         }
                     });

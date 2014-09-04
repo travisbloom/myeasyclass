@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .factory('relationFactory', ['$q', 'userFactory', 'classesFactory', function ($q, userFactory, classesFactory)  {
+    .factory('relationFactory', ['$q', 'classesFactory', 'userFactory', function ($q, classesFactory, userFactory)  {
          /**
          * accepts a string that matches the relationship in Parse
          * returns a promise with the requested relationships
@@ -49,25 +49,108 @@ angular.module('myEasyClass')
                 //return the array of promises once they have all been resolved
                 return $q.all(returnedPromises);
             },
-            vote: function (preference, classId) {
-                var relation,
+             /**
+             * maps the requested relationships to their respective classes
+             * */
+            mapClassRelations: function (relationsArray) {
+                var counter, deferred = $q.defer(), retunedRelations = {}, classCounter, rankedCounter, dislikesCounter,
+                    classes = classesFactory.angularClasses;
+                parseRelations.getRelations(relationsArray).then (function(data) {
+                    console.log(data);
+                    console.log(classes);
+                    //changes array of relations to an object with relation attributes
+                    //TODO remove the need to do this, it's redundant
+                    for (counter = 0; counter < data.length; counter++) {
+                        retunedRelations[data[counter].rel] = data[counter].relatedIds;
+                    }
+                    //iterate through all the classes
+                    for (classCounter = 0; classCounter < classes.length; classCounter++) {
+                        //for each string in the ranked relation
+                        for (rankedCounter = 0; rankedCounter < retunedRelations.ranked.length; rankedCounter++) {
+                            if (classes[classCounter].id === retunedRelations.ranked[rankedCounter]) {
+                                classes[classCounter].likedByCurrentUser = true;
+                            }
+                        }
+                        //for each string in the dislikes relation
+                        for (dislikesCounter = 0; dislikesCounter < retunedRelations.dislikes.length; dislikesCounter++) {
+                            if (classes[classCounter].id === retunedRelations.dislikes[dislikesCounter]) {
+                                classes[classCounter].dislikedByCurrentUser = true;
+                            }
+                        }
+                    }
+                    deferred.resolve(classes);
+                }, function () {
+                    deferred.reject();
+                });
+                return deferred.promise;
+            },
+             /**
+             * downvote or upvote a class
+              * if a user is logged in, increment the Easiness counter and changes the liked/dislikedByCurrentUser boolean on the angularClass
+              * saves the new relationship between the user and the class to Parse, changes Easiness
+              * calculate change amount (ex: a user who had voted a class up downvotes, Easiness should decrease 2 not 1)
+             * */
+            vote: function (preference, classId, index) {
+                var deferred = $q.defer(), numChange,
+                    //needed to update user relations in parse
                     currentUser = userFactory.data.parseUser,
-                    currentClass = classesFactory.parseClasses[classId];
-
-                console.log(currentClass);
-                //increment Easiness for course
-                if(preference === 'liked'){
-                    currentClass.increment("Easiness");
-                    relation = currentUser.relation("ranked");
+                    //needed to update parse class Obj
+                    parseClass = classesFactory.parseClasses[classId],
+                    //needed to quickly query relation data added to the class already by the relation factory
+                    angularClass = classesFactory.angularClasses[index];
+                //if theres no active user
+                if (!userFactory.data.parseUser) {
+                    deferred.reject('You must be logged in to vote on a class');
                 } else {
-                    currentClass.increment("Easiness", -1);
-                    relation = currentUser.relation("dislikes");
+                    //if a user is trying to like an item
+                    if (preference === 'liked') {
+                        //if the item has already been liked by a user
+                        if (angularClass.likedByCurrentUser) {
+                            deferred.reject('You have already liked this class');
+                        } else {
+                            //if they dislike the class currently
+                            if (angularClass.dislikedByCurrentUser) {
+                                numChange = 2;
+                            } else {
+                                numChange = 1;
+                            }
+                        }
+                        //if the user is trying to dislike an item
+                    } else {
+                        //if the item has already been disliked by a user
+                        if (angularClass.dislikedByCurrentUser) {
+                            deferred.reject('You have already disliked this class');
+                        } else {
+                            //if they liked the class currently
+                            if (angularClass.likedByCurrentUser) {
+                                numChange = -2;
+                            } else {
+                                numChange = -1;
+                            }
+                        }
+                    }
+                    //if a change was made to the class
+                    if (numChange) {
+                        if (numChange > 0) {
+                            angularClass.likedByCurrentUser = true;
+                            angularClass.dislikedByCurrentUser = false;
+                            currentUser.relation("ranked").add(parseClass);
+                            currentUser.relation("dislikes").remove(parseClass);
+                        } else {
+                            angularClass.likedByCurrentUser = false;
+                            angularClass.dislikedByCurrentUser = true;
+                            currentUser.relation("ranked").remove(parseClass);
+                            currentUser.relation("dislikes").add(parseClass);
+                        }
+                        angularClass.Easiness += numChange;
+                        parseClass.increment("Easiness", numChange);
+                        //save changes to Parse
+                        parseClass.save();
+                        currentUser.save();
+                    }
+                    deferred.resolve(angularClass);
                 }
-                currentClass.save();
-
-                //create a relationship between the user and the course
-                relation.add(currentClass);
-                currentUser.save();
+                return deferred.promise;
             }
         };
         return parseRelations;

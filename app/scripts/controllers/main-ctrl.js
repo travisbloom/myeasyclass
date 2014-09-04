@@ -1,29 +1,28 @@
 angular.module('myEasyClass')
     .controller('mainCtrl', ['$scope', 'classesFactory', 'relationFactory', 'userFactory', '$modal', '$q', function ($scope, classesFactory, relationFactory, userFactory, $modal, $q) {
-        var userStatus, userRelations;
-
+        var userStatus, userRelations, loadClasses;
         /**
-        * grab relationship data from the userFactory, adds it to $scope.user.relations
-         * @param ranked: likes a given class (I wish I named these better)
-         * @param dislikes: dislikes a given class
-        * */
-        userRelations = function () {
-            var counter, deferred = $q.defer();
-            userFactory.currentUser().then(function () {
-                relationFactory.getRelations(['ranked', 'dislikes']).then (function(data) {
-                    console.log(data);
-                    //adds each relationship type to $scope.user.relations
-                    for (counter = 0; counter < data.length; counter++) {
-                        $scope.user.relations[data[counter].rel] = data[counter].relatedIds;
-                    }
-                    deferred.resolve();
-                }, function (err) {
-                    $scope.error = 'There was an error figuring out what classes you have voted on';
-                    deferred.reject();
+         * pull in classes and map their respective relationships with the user if signed in
+         **/
+        (function () {
+            classesFactory.getClasses().then(function(classes) {
+                $scope.classes = classes;
+                //if a user is logged in
+                userFactory.currentUser().then(function () {
+                    //map the relations to the classes
+                    relationFactory.mapClassRelations(['ranked', 'dislikes']).then(function(mappedClasses){
+                        console.log(mappedClasses);
+                        $scope.classes = mappedClasses;
+                    }, function () {
+                        $scope.error = 'There was an error getting your class relationship data. Your ratings won\'t show up.'
+                    });
                 });
+            }, function (){
+                //mock classes on error, needed for offline dev work
+                $scope.classes = [{CourseNumber: 'test', Easiness: 4}];
+                $scope.error = 'There was an error getting the classes. Go grab a beer, watch some Colbert Report, and try again in an hour or so.'
             });
-            return deferred.promise;
-        };
+        })();
         /**
          * Checks for a current user and set the navbar accordingly
         **/
@@ -61,33 +60,6 @@ angular.module('myEasyClass')
          *ON PAGE LOAD
          ****************/
         userStatus();
-        /**
-         * pull in classes and map their respective relationships with the user if signed in
-         **/
-        classesFactory.getClasses().then(function(data) {
-            var classCounter, rankedCounter, dislikesCounter;
-            $scope.classes = data;
-            //grabs the users relations and map them to their respective class
-            userRelations().then(function () {
-                //for each class
-                for (classCounter = 0; classCounter < $scope.classes.length; classCounter ++) {
-                    //for each string in the ranked relation
-                    for (rankedCounter = 0; rankedCounter < $scope.user.relations.ranked.length; rankedCounter++) {
-                        if ($scope.classes[classCounter].id === $scope.user.relations.ranked[rankedCounter]) {
-                            $scope.classes[classCounter].likedByCurrentUser = true;
-                        }
-                    }
-                    //for each string in the dislikes relation
-                    for (dislikesCounter = 0; dislikesCounter < $scope.user.relations.dislikes.length; dislikesCounter++) {
-                        if ($scope.classes[classCounter].id === $scope.user.relations.dislikes[dislikesCounter]) {
-                            $scope.classes[classCounter].dislikedByCurrentUser = true;
-                        }
-                    }
-                }
-            });
-        }, function (err){
-            $scope.error = 'There was an error getting the classes. Go grab a beer, watch some Colbert Report, and try again in an hour or so.'
-        });
 
         /**
          * Logs the user out
@@ -97,10 +69,8 @@ angular.module('myEasyClass')
                 userStatus();
             });
         };
-
         $scope.toggleClassModal = function () {
             console.log($scope.error);
-            $scope.error = 'hello world!'
         };
         /**
         * Toggle the Sign Up Modal, returns a success string on completion
@@ -110,12 +80,31 @@ angular.module('myEasyClass')
                 templateUrl: 'templates/modal-sign-in.html',
                 controller: 'userCtrl'
             });
+            //on successful completion
             signUpModal.result.then(function (signUpResponse) {
-                console.log('new data!');
-                console.log(signUpResponse);
                 $scope.success = signUpResponse;
                 $scope.error = false;
+                //update the navbar
                 userStatus();
+                //map the relations to the classes
+                relationFactory.mapClassRelations(['ranked', 'dislikes']).then(function(mappedClasses){
+                    console.log(mappedClasses);
+                    $scope.classes = mappedClasses;
+                }, function () {
+                    $scope.error = 'There was an error getting your class relationship data. Your ratings won\'t show up.'
+                });
             });
         };
+        /**
+        * Let users vote on a given class
+        * */
+        $scope.vote = function (preference, classIndex) {
+            var theClass = $scope.classes[classIndex];
+            relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
+                //update relations/easiness on frontend
+                theClass = angularClass;
+            }, function (err){
+                $scope.error = err;
+            });
+        }
 }]);

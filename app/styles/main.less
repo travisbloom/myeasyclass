@@ -10,6 +10,7 @@ Override bootstrap variables
 @grid-float-breakpoint: 500px;
 //originally at 768px
 @screen-sm-min: 530px;
+@btn-primary-bg: @mec-action-color;
 /*
 Appwide variables
 */
@@ -19,7 +20,6 @@ Appwide variables
 @mec-main-darkest-color: #2C3E50;
 @mec-secondary-color: #3498DB;
 @mec-action-color: #E74C3C;
-@navbar-height: 50px;
 @footer-height: 50px;
 
 /*
@@ -41,9 +41,6 @@ body {
 }
 .space {
   margin-top: 10px;
-}
-.btn-primary {
-  background-color: @mec-action-color;
 }
 a {
   &:hover {
@@ -92,5 +89,5 @@ component specific css
 */
 @import "components/fixed-sidebar.less";
 @import "components/modals.less";
-@import "components/class-row.less";
 @import "components/navbar.less";
+@import "components/class-row.less";
