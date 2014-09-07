@@ -106,50 +106,51 @@ angular.module('myEasyClass')
                     if (preference === 'liked') {
                         //if the item has already been liked by a user
                         if (angularClass.likedByCurrentUser) {
-                            deferred.reject('You have already liked this class');
-                        } else {
+                            numChange = -1;
+                            currentUser.relation("ranked").remove(parseClass);
+                            angularClass.likedByCurrentUser = false;
                             //if they dislike the class currently
-                            if (angularClass.dislikedByCurrentUser) {
-                                numChange = 2;
-                            } else {
-                                numChange = 1;
-                            }
+                        } else if (angularClass.dislikedByCurrentUser) {
+                            numChange = 2;
+                            currentUser.relation("ranked").add(parseClass);
+                            currentUser.relation("dislikes").remove(parseClass);
+                            angularClass.likedByCurrentUser = true;
+                            angularClass.dislikedByCurrentUser = false;
+                            //if they haven't voted on the class
+                        } else {
+                            numChange = 1;
+                            currentUser.relation("ranked").add(parseClass);
+                            angularClass.likedByCurrentUser = true;
                         }
-                        //if the user is trying to dislike an item
+                    //if the user is trying to dislike an item
                     } else {
                         //if the item has already been disliked by a user
                         if (angularClass.dislikedByCurrentUser) {
-                            deferred.reject('You have already disliked this class');
-                        } else {
-                            //if they liked the class currently
-                            if (angularClass.likedByCurrentUser) {
-                                numChange = -2;
-                            } else {
-                                numChange = -1;
-                            }
-                        }
-                    }
-                    //if a change was made to the class
-                    if (numChange) {
-                        if (numChange > 0) {
-                            angularClass.likedByCurrentUser = true;
-                            angularClass.dislikedByCurrentUser = false;
-                            currentUser.relation("ranked").add(parseClass);
+                            numChange = 1;
                             currentUser.relation("dislikes").remove(parseClass);
-                        } else {
+                            angularClass.dislikedByCurrentUser = false;
+                        //if they liked the class currently
+                        } else if (angularClass.likedByCurrentUser) {
+                            numChange = -2;
+                            currentUser.relation("dislikes").add(parseClass);
+                            currentUser.relation("ranked").remove(parseClass);
                             angularClass.likedByCurrentUser = false;
                             angularClass.dislikedByCurrentUser = true;
-                            currentUser.relation("ranked").remove(parseClass);
+                        //if they haven't voted on the class
+                        } else {
+                            numChange = -1;
                             currentUser.relation("dislikes").add(parseClass);
+                            angularClass.dislikedByCurrentUser = true;
                         }
-                        angularClass.Easiness += numChange;
-                        parseClass.increment("Easiness", numChange);
-                        //save changes to Parse
-                        parseClass.save();
-                        currentUser.save();
                     }
-                    deferred.resolve(angularClass);
                 }
+                console.log(numChange);
+                angularClass.Easiness += numChange;
+                parseClass.increment("Easiness", numChange);
+                //save changes to Parse
+                parseClass.save();
+                currentUser.save();
+                deferred.resolve(angularClass);
                 return deferred.promise;
             }
         };

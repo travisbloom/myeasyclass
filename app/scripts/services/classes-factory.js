@@ -1,7 +1,9 @@
 angular.module('myEasyClass')
     .factory('classesFactory', ['$q', 'userFactory', function ($q, userFactory) {
         var classesFactory = {
+            //needed for parse interactions, stored as obj Ids
             parseClasses: null,
+            //array of classes, cleaned of parse logic for angular manipulation
             angularClasses: null,
             /**
              * adds relation data to classes pulled from the parseClasses function

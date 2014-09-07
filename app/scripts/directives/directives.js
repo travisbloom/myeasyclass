@@ -22,7 +22,13 @@ angular.module('myEasyClass')
     .directive('classRow', [function () {
         return {
             templateUrl: 'templates/class.html',
-            restrict: 'E',
+            restrict: 'E'
+        }
+    }])
+    .directive('navbar', [function () {
+        return {
+            templateUrl: 'templates/navbar.html',
+            restrict: 'E'
         }
     }])
     .directive('pulse', [function () {

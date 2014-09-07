@@ -1,15 +1,13 @@
 <div class="row class-row">
     <div class="col-xs-2 vote-container text-center">
         <div>
-            <span pulse data-ng-if="oneClass.likedByCurrentUser" class="glyphicon glyphicon-arrow-up liked"></span>
-            <span pulse data-ng-if="!oneClass.likedByCurrentUser" data-ng-click="vote('liked', $index)" class="glyphicon glyphicon-arrow-up"></span>
+            <span pulse data-ng-class="{liked : oneClass.likedByCurrentUser}" data-ng-click="vote('liked', $index)" class="glyphicon glyphicon-arrow-up"></span>
         </div>
         <div class="easiness-count">
             {{oneClass.Easiness}}
         </div>
         <div>
-            <span data-ng-if="oneClass.dislikedByCurrentUser" class="glyphicon glyphicon-arrow-down disliked"></span>
-            <span data-ng-if="!oneClass.dislikedByCurrentUser" data-ng-click="vote('disliked', $index)" class="glyphicon glyphicon-arrow-down"></span>
+            <span data-ng-class="{disliked : oneClass.dislikedByCurrentUser}" data-ng-click="vote('disliked', $index)" class="glyphicon glyphicon-arrow-down"></span>
         </div>
     </div>
     <div class="col-xs-10 class-id">

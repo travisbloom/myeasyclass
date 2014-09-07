@@ -53,12 +53,13 @@ gulp.task('clean-dist', function () {
         .pipe(clean());
 });
 //pull bootstrap fonts in to image folder
-gulp.task('get-bootstrap-font', function () {
+gulp.task('images_fonts', function () {
     return gulp.src([
-        'app/bower_components/bootstrap/fonts/*.*'
+        'app/bower_components/bootstrap/fonts/*.*',
+        'app/images/*.*'
     ])
 
-        .pipe(gulp.dest('dist/images/fonts'));
+        .pipe(gulp.dest('dist/assets'));
 });
 //moves assets not touched by gulp to dist folder
 gulp.task('move', function () {
@@ -72,7 +73,7 @@ gulp.task('move', function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['clean-dist', 'get-bootstrap-font', 'move', 'less', 'js', 'bower']);
+gulp.task('build', ['clean-dist', 'images_fonts', 'move', 'less', 'js', 'bower']);
 
 //watch for changes and recompile
 gulp.task('watch', ['build'], function () {
