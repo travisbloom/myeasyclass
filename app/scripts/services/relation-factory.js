@@ -91,17 +91,19 @@ angular.module('myEasyClass')
               * calculate change amount (ex: a user who had voted a class up downvotes, Easiness should decrease 2 not 1)
              * */
             vote: function (preference, classId, index) {
-                var deferred = $q.defer(), numChange,
+                var deferred = $q.defer(), numChange, parseClass,
                     //needed to update user relations in parse
                     currentUser = userFactory.data.parseUser,
-                    //needed to update parse class Obj
-                    parseClass = classesFactory.parseClasses[classId],
                     //needed to quickly query relation data added to the class already by the relation factory
                     angularClass = classesFactory.angularClasses[index];
                 //if theres no active user
-                if (!userFactory.data.parseUser) {
+                if (!currentUser) {
                     deferred.reject('You must be logged in to vote on a class');
                 } else {
+                    //instantiate a new instance of the Course Obj, link to the class by setting it's Id
+                    parseClass = Parse.Object.extend("Course");
+                    parseClass = new parseClass();
+                    parseClass.id = classId;
                     //if a user is trying to like an item
                     if (preference === 'liked') {
                         //if the item has already been liked by a user
@@ -143,14 +145,14 @@ angular.module('myEasyClass')
                             angularClass.dislikedByCurrentUser = true;
                         }
                     }
-                }
-                console.log(numChange);
-                angularClass.Easiness += numChange;
-                parseClass.increment("Easiness", numChange);
-                //save changes to Parse
-                parseClass.save();
-                currentUser.save();
-                deferred.resolve(angularClass);
+                    angularClass.Easiness += numChange;
+                    parseClass.increment("Easiness", numChange);
+                    //save changes to Parse
+                    parseClass.save();
+                    currentUser.save();
+                    deferred.resolve(angularClass);
+                 }
+
                 return deferred.promise;
             }
         };

@@ -105,6 +105,25 @@ angular.module('myEasyClass')
                 $scope.error = false;
                 //update the navbar
                 userStatus();
+                //add relationship mappings
+                mapRelations();
+            });
+        };
+        /**
+         * Toggle the add class Modal, returns the new class on completion
+         * */
+        $scope.toggleSignInModal = function () {
+            var signUpModal = $modal.open({
+                templateUrl: 'templates/modal-new-class.html',
+                controller: 'newClassCtrl'
+            });
+            //on successful completion
+            signUpModal.result.then(function (signUpResponse) {
+                $scope.success = signUpResponse;
+                $scope.error = false;
+                //update the navbar
+                userStatus();
+                //add relationship mappings
                 mapRelations();
             });
         };
@@ -112,10 +131,8 @@ angular.module('myEasyClass')
         * Let users vote on a given class
         * */
         $scope.vote = function (preference, classIndex) {
-            console.log('test');
             var theClass = $scope.classes[classIndex];
             relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
-                console.log(angularClass);
                 //update relations/easiness on frontend
                 theClass = angularClass;
             }, function (err){

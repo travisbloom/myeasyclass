@@ -1,5 +1,5 @@
 angular.module('myEasyClass')
-    .controller('individualClassController', ['$scope', 'userFactory', 'relationFactory', '$rootScope', function ($scope, userFactory, relationFactory, $rootScope) {
+    .controller('newClassCtrl', ['$scope', 'userFactory', 'relationFactory', function ($scope, userFactory, relationFactory) {
         console.log($scope.info);
         $scope.vote = function (preference, classId) {
             console.log($scope.info);

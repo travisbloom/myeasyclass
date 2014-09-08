@@ -56,7 +56,7 @@ gulp.task('clean-dist', function () {
 gulp.task('images_fonts', function () {
     return gulp.src([
         'app/bower_components/bootstrap/fonts/*.*',
-        'app/images/*.*'
+        'app/assets/*.*'
     ])
 
         .pipe(gulp.dest('dist/assets'));
