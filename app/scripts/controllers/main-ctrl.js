@@ -58,7 +58,7 @@ angular.module('myEasyClass')
         (function () {
             $scope.loading = true;
             classesFactory.getClasses().then(function(classes) {
-                $scope.classes = classes;
+                $scope.classes = classesFactory.angularClasses;
                 //if a user is logged in
                 userFactory.currentUser().then(function () {
                     mapRelations();
@@ -88,9 +88,7 @@ angular.module('myEasyClass')
                 $scope.success = 'You\'ve successfully logged out.'
             });
         };
-        $scope.toggleClassModal = function () {
-            console.log($scope.error);
-        };
+
         /**
         * Toggle the Sign Up Modal, returns a success string on completion
         * */
@@ -112,31 +110,37 @@ angular.module('myEasyClass')
         /**
          * Toggle the add class Modal, returns the new class on completion
          * */
-        $scope.toggleSignInModal = function () {
-            var signUpModal = $modal.open({
-                templateUrl: 'templates/modal-new-class.html',
-                controller: 'newClassCtrl'
-            });
-            //on successful completion
-            signUpModal.result.then(function (signUpResponse) {
-                $scope.success = signUpResponse;
-                $scope.error = false;
-                //update the navbar
-                userStatus();
-                //add relationship mappings
-                mapRelations();
-            });
+        $scope.toggleNewClassModal = function () {
+            console.log(Parse.User.current());
+            if (userFactory.data.username) {
+                var newClassModal = $modal.open({
+                    templateUrl: 'templates/modal-new-class.html',
+                    controller: 'newClassCtrl'
+                });
+                //on successful completion
+                newClassModal.result.then(function (successString) {
+                    $scope.success = successString;
+                    $scope.vote('liked', classesFactory.angularClasses.length - 1);
+                    $scope.error = false;
+                });
+            } else {
+                $scope.error = 'You must sign in before creating a class.';
+            }
         };
         /**
         * Let users vote on a given class
         * */
         $scope.vote = function (preference, classIndex) {
-            var theClass = $scope.classes[classIndex];
-            relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
-                //update relations/easiness on frontend
-                theClass = angularClass;
-            }, function (err){
-                $scope.error = err;
-            });
+            if (userFactory.data.username) {
+                var theClass = classesFactory.angularClasses[classIndex];
+                relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
+                    //update relations/easiness on frontend
+                    theClass = angularClass;
+                }, function (err) {
+                    $scope.error = err;
+                });
+            } else {
+                $scope.error = 'You must sign in before voting on a class.';
+            }
         }
 }]);

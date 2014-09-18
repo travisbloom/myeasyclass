@@ -1,6 +1,6 @@
 <div class="mec-modal">
     <div class="header">
-        <h3 class="modal-title">Login</h3>
+        <h3 class="modal-title">Sign In or Create an Account</h3>
     </div>
     <!--modal error-->
     <div data-ng-show="error" class="alert alert-warning alert-dismissible alert-animation">
@@ -9,10 +9,18 @@
     </div>
 
     <div class="modal-body" data-ng-class="{errorMargin : error}">
-        <div><strong>Username:</strong></div>
-        <div><input type="text" class="form-control" placeholder="no email required..." data-ng-model="signIn.username"></div>
-        <div class="space"><strong>Password:</strong></div>
-        <div><input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="signIn.pass"></div>
+        <div class="form-horizontal row">
+            <!--username-->
+            <label class="col-sm-4 control-label">Username:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" placeholder="no email required..." data-ng-model="signIn.username">
+            </div>
+            <!--password-->
+            <label class="col-sm-4 control-label">Password:</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" placeholder="please don't make it 123456" data-ng-model="signIn.pass">
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <div class="buttons">

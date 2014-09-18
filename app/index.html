@@ -36,7 +36,7 @@
         <strong>{{error}}</strong>
     </div>
     <!--Info box-->
-    <div data-ng-show="success" class="alert alert-success alert-dismissible alert-animation">
+    <div data-ng-show="success && !error" class="alert alert-success alert-dismissible alert-animation">
         <button type="button" class="close" data-ng-click="success = null"><span>&times;</span></button>
         <strong>{{success}}</strong>
     </div>
