@@ -29,7 +29,6 @@ angular.module('myEasyClass')
         mapRelations = function () {
             $scope.loading = true;
             relationFactory.mapClassRelations(['ranked', 'dislikes']).then(function(mappedClasses){
-                console.log(mappedClasses);
                 $scope.classes = mappedClasses;
                 $scope.loading = false;
             }, function () {
@@ -111,8 +110,7 @@ angular.module('myEasyClass')
          * Toggle the add class Modal, returns the new class on completion
          * */
         $scope.toggleNewClassModal = function () {
-            console.log(Parse.User.current());
-            if (userFactory.data.username) {
+            if (Parse.User.current()) {
                 var newClassModal = $modal.open({
                     templateUrl: 'templates/modal-new-class.html',
                     controller: 'newClassCtrl'
@@ -131,16 +129,12 @@ angular.module('myEasyClass')
         * Let users vote on a given class
         * */
         $scope.vote = function (preference, classIndex) {
-            if (userFactory.data.username) {
-                var theClass = classesFactory.angularClasses[classIndex];
-                relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
-                    //update relations/easiness on frontend
-                    theClass = angularClass;
-                }, function (err) {
-                    $scope.error = err;
-                });
-            } else {
-                $scope.error = 'You must sign in before voting on a class.';
-            }
+            var theClass = classesFactory.angularClasses[classIndex];
+            relationFactory.vote(preference, theClass.id, classIndex).then(function (angularClass) {
+                //update relations/easiness on frontend
+                theClass = angularClass;
+            }, function (err) {
+                $scope.error = err;
+            });
         }
 }]);

@@ -93,10 +93,11 @@ angular.module('myEasyClass')
             vote: function (preference, classId, index) {
                 var deferred = $q.defer(), numChange, parseClass,
                     //needed to update user relations in parse
-                    currentUser = userFactory.data.parseUser,
+                    currentUser = Parse.User.current(),
                     //needed to quickly query relation data added to the class already by the relation factory
                     angularClass = classesFactory.angularClasses[index];
                 //if theres no active user
+                 console.log(currentUser);
                 if (!currentUser) {
                     deferred.reject('You must be logged in to vote on a class');
                 } else {

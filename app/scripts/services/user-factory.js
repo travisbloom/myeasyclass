@@ -5,8 +5,7 @@ angular.module('myEasyClass')
              * Store user data/states to be used across scopes
             * */
             data: {
-                username: null,
-                parseUser: Parse.User.current()
+                username: null
             },
             currentUser: function () {
                 var deferred = $q.defer();
