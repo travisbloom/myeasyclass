@@ -42,6 +42,24 @@ angular.module('myEasyClass')
                     }
                 });
                 return deferred.promise;
+            },
+            createUser: function (username, pw) {
+                var user = new Parse.User(), deferred = $q.defer();
+                user.set("username", username);
+                user.set("password", pw);
+                user.set("School", "UConn");
+
+                user.signUp(null, {
+                    success: function (user) {
+                        parseUser.data.username = user.attributes.username;
+                        deferred.resolve(user.attributes);
+                    },
+                    error: function (user, error) {
+                        console.log(error);
+                        deferred.reject(error);
+                    }
+                });
+                return deferred.promise;
             }
         };
         return parseUser;

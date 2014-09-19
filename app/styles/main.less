@@ -56,7 +56,7 @@ a {
   width: 100%;
   height: @navbar-height;
   text-align: center;
-  position: absolute;
+  position: fixed;
   top:@navbar-height;
 }
 .app-container {
@@ -91,3 +91,31 @@ component specific css
 @import "components/modals.less";
 @import "components/navbar.less";
 @import "components/class-row.less";
+
+
+/*
+Responsive changes
+*/
+
+@media screen and (max-width: @screen-sm-min) {
+  .app-container {
+    h2 {
+      font-size: 24px;
+      margin-bottom: 0px;
+    }
+  }
+  .fixed-sidebar {
+    transition: all 1s;
+    position: relative;
+    padding-right: 0;
+    &.affix {
+      width: 91%;
+    }
+    .extra-info {
+      display: none;
+    }
+    .btn-primary {
+      width: 100%
+    }
+  }
+}
