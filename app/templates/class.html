@@ -1,17 +1,17 @@
 <div class="row class-row">
     <div class="col-xs-2 vote-container text-center">
-        <div>
+        <div >
             <span pulse data-ng-class="{liked : oneClass.likedByCurrentUser}" data-ng-click="vote('liked', $index)" class="glyphicon glyphicon-arrow-up"></span>
         </div>
         <div class="easiness-count">
             {{oneClass.Easiness}}
         </div>
         <div>
-            <span data-ng-class="{disliked : oneClass.dislikedByCurrentUser}" data-ng-click="vote('disliked', $index)" class="glyphicon glyphicon-arrow-down"></span>
+            <span pulse data-ng-class="{disliked : oneClass.dislikedByCurrentUser}" data-ng-click="vote('disliked', $index)" class="glyphicon glyphicon-arrow-down"></span>
         </div>
     </div>
     <div class="col-xs-10 class-id">
-        <span class="department">{{oneClass.DepartmentID}}</span>
+        <span class="department" pulse>{{oneClass.DepartmentID}}</span>
         <span class="number">{{oneClass.CourseNumber}}</span>
         <span class="professor">{{oneClass.ProfessorName}}</span>
     </div>

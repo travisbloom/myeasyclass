@@ -7,10 +7,11 @@ External Libraries
 Override bootstrap variables
 */
 //originally at 768px
-@grid-float-breakpoint: 500px;
+//@grid-float-breakpoint: 530px;
 //originally at 768px
-@screen-sm-min: 530px;
+//@screen-sm-min: 530px;
 @btn-primary-bg: @mec-action-color;
+@navbar-collapse-max-height: 500px;
 /*
 Appwide variables
 */
@@ -98,24 +99,51 @@ Responsive changes
 */
 
 @media screen and (max-width: @screen-sm-min) {
+  .alert {
+    padding: 3px;
+
+  }
+  .alert-dismissable .close, .alert-dismissible .close {
+    top: 13px;
+    right: 7px;
+  }
   .app-container {
-    h2 {
-      font-size: 24px;
+    h2, h3 {
+      font-size: 20px;
       margin-bottom: 0px;
     }
   }
   .fixed-sidebar {
-    transition: all 1s;
+    transition: all 0s;
     position: relative;
     padding-right: 0;
+    padding-top: 5px;
     &.affix {
       width: 91%;
+//      &.errorMargin{
+//        margin-top:@navbar-height;
+//      }
     }
+
     .extra-info {
       display: none;
     }
     .btn-primary {
       width: 100%
     }
+    .btn-group-vertical {
+      width:100%;
+    }
+    .panel-group {
+      margin-bottom: 0px;
+      .panel-heading {
+        text-align: center;
+      }
+    }
   }
+  .footer {
+    font-size: 10px;
+  }
+
+
 }

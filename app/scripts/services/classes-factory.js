@@ -6,34 +6,32 @@ angular.module('myEasyClass')
             /**
              * adds relation data to classes pulled from the parseClasses function
             * */
-            getClasses: function () {
+            getClasses: function (sortType) {
                 var query, counter, classesArray = [], newResult, deferred = $q.defer(), course;
-                //if the classes have already been loaded
-                if (classesFactory.angularClasses) {
-                    return classesFactory.angularClasses;
-                } else {
-                    course = Parse.Object.extend("Course");
-                    query = new Parse.Query(course);
-                    query.limit(100);
-                    query.descending('Easiness');
-                    query.find({
-                        success: function (results) {
-                            //configures the returned Parse Object from an extended backbone Obj to normal JSON
-                            for (counter = 0; counter < results.length; counter++) {
-                                //add the class to the responseArray
-                                newResult = results[counter].attributes;
-                                newResult.id = results[counter].id;
-                                classesArray.push(newResult);
-                            }
-                            classesFactory.angularClasses = classesArray;
-                            deferred.resolve(classesArray);
-                        },
-                        error: function () {
-                            deferred.reject();
-                        }
-                    });
-                    return deferred.promise;
+                course = Parse.Object.extend("Course");
+                query = new Parse.Query(course);
+                query.limit(100);
+                if (sortType) {
+                    query.equalTo(sortType, true);
                 }
+                query.descending('Easiness');
+                query.find({
+                    success: function (results) {
+                        //configures the returned Parse Object from an extended backbone Obj to normal JSON
+                        for (counter = 0; counter < results.length; counter++) {
+                            //add the class to the responseArray
+                            newResult = results[counter].attributes;
+                            newResult.id = results[counter].id;
+                            classesArray.push(newResult);
+                        }
+                        classesFactory.angularClasses = classesArray;
+                        deferred.resolve(classesArray);
+                    },
+                    error: function () {
+                        deferred.reject();
+                    }
+                });
+                return deferred.promise;
             },
             createClass: function (data) {
                 var Course = Parse.Object.extend("Course"), deferred = $q.defer();

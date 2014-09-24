@@ -1,17 +1,12 @@
 <div class="search-container">
     <button class="btn btn-primary" data-ng-click="collapsed.search = !collapsed.search">Narrow Your Search</button>
     <div class="checkbox" collapse="collapsed.search">
-        <div>
-            <label><input type="checkbox" data-ng-model="searchCriteria.contentArea.one"> Arts and Humanities (1)</label>
-        </div>
-        <div>
-            <label><input type="checkbox" data-ng-model="searchCriteria.contentArea.two"> Social Sciences (2)</label>
-        </div>
-        <div>
-            <label><input type="checkbox" data-ng-model="searchCriteria.contentArea.three"> Science and Technology (3)</label>
-        </div>
-        <div>
-            <label><input type="checkbox" data-ng-model="searchCriteria.contentArea.four"> Diversity and Multiculturalism (4)</label>
+        <div class="btn-group-vertical">
+            <button class="btn btn-primary" data-ng-class="{selected : !classFilter}" data-ng-click="pullClasses()">All Classes</button>
+            <button class="btn btn-primary" data-ng-class="{selected : classFilter === 'Area1'}" data-ng-click="pullClasses('Area1')"> Arts and Humanities (1)</button>
+            <button class="btn btn-primary" data-ng-class="{selected : classFilter === 'Area2'}" data-ng-click="pullClasses('Area2')"> Social Sciences (2)</button>
+            <button class="btn btn-primary" data-ng-class="{selected : classFilter === 'Area3'}" data-ng-click="pullClasses('Area3')"> Science and Technology (3)</button>
+            <button class="btn btn-primary" data-ng-class="{selected : classFilter === 'Area4'}" data-ng-click="pullClasses('Area4')"> Diversity and Multiculturalism (4)</button>
         </div>
     </div>
 </div>

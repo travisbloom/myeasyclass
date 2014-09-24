@@ -35,6 +35,9 @@ angular.module('myEasyClass')
         return {
             restrict: 'A',
             link: function(scope, el, attr) {
+                el.on('mousedown', function() {
+                    el.removeClass('pulse');
+                });
                 el.on('click', function() {
                     el.addClass('pulse');
                 })

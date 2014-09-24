@@ -9,17 +9,7 @@ angular.module('myEasyClass')
             nav: true,
             search: true
         };
-        //default search criteria
-        $scope.searchCriteria = {
-            contentArea: {
-                one: true,
-                two: true,
-                three: true,
-                four: true
-            }
-        };
         $scope.user = {
-            relations: {},
             name: false
         };
         $scope.loading = false;
@@ -46,17 +36,13 @@ angular.module('myEasyClass')
                 $scope.user.name = false;
             });
         };
-
-        /****************
-         *ON PAGE LOAD
-         ****************/
-        userStatus();
         /**
          * pull in classes and map their respective relationships with the user if signed in
          **/
-        (function () {
+        $scope.pullClasses = function (sortType) {
             $scope.loading = true;
-            classesFactory.getClasses().then(function(classes) {
+            $scope.classFilter = sortType;
+            classesFactory.getClasses(sortType).then(function() {
                 $scope.classes = classesFactory.angularClasses;
                 //if a user is logged in
                 userFactory.currentUser().then(function () {
@@ -70,13 +56,13 @@ angular.module('myEasyClass')
                 $scope.loading = false;
                 $scope.error = 'There was an error getting the classes. Go grab a beer, watch some Colbert Report, and try again in an hour or so.'
             });
-        })();
-
+        };
         /**
          * Logs the user out
          * */
         $scope.logOut = function () {
             var counter;
+            $scope.collapsed.nav = true;
             userFactory.logOut().then(function(){
                 userStatus();
                 //reset class obj relations
@@ -92,6 +78,7 @@ angular.module('myEasyClass')
         * Toggle the Sign Up Modal, returns a success string on completion
         * */
         $scope.toggleSignInModal = function () {
+            $scope.collapsed.nav = true;
             var signUpModal = $modal.open({
                 templateUrl: 'templates/modal-sign-in.html',
                 controller: 'userCtrl'
@@ -110,6 +97,7 @@ angular.module('myEasyClass')
          * Toggle the add class Modal, returns the new class on completion
          * */
         $scope.toggleNewClassModal = function () {
+            $scope.collapsed.nav = true;
             if (Parse.User.current()) {
                 var newClassModal = $modal.open({
                     templateUrl: 'templates/modal-new-class.html',
@@ -136,5 +124,12 @@ angular.module('myEasyClass')
             }, function (err) {
                 $scope.error = err;
             });
-        }
+        };
+
+
+        /****************
+         *ON PAGE LOAD
+         ****************/
+        userStatus();
+        $scope.pullClasses();
 }]);

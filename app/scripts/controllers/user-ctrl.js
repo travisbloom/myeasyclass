@@ -30,5 +30,8 @@ angular.module('myEasyClass')
                     $scope.error = 'We couldn\'t complete your request. The site failed harder than <a href="http://www.youtube.com/watch?v=Awf45u6zrP0">this cat...</a>';
                 }
             });
+        };
+        $scope.dismiss = function () {
+            $modalInstance.dismiss();
         }
     }]);
