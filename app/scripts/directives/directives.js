@@ -7,12 +7,6 @@ angular.module('myEasyClass')
             restrict: 'AE'
         }
     }])
-    .directive('sidebarInfo', [function () {
-        return {
-            templateUrl: 'templates/sidebar-info.html',
-            restrict: 'E'
-        }
-    }])
     .directive('sidebarSearch', [function () {
         return {
             templateUrl: 'templates/sidebar-search.html',

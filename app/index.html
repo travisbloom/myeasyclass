@@ -2,9 +2,9 @@
 <html class="no-js" data-ng-app="myEasyClass">
     <head>
         <meta charset="utf-8">
-        <title>MyEasyClass</title>
+        <title>MyEasyClass- Your Own Personal UConn Course Adviser</title>
         <meta name="author" content="Travis Bloom">
-        <meta name="description" content="Your Own Personal Course Advisor">
+        <meta name="description" content="MyEasyClass.com was made to answer the #1 questions UConn students face semester after semester when it's time to sign up for courses: What are some easy classes to fill my schedule?">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="main.css">
         <link href='http://fonts.googleapis.com/css?family=Permanent+Marker:400|Graduate|Schoolbell|Merriweather+Sans:300,400,700' rel='stylesheet' type='text/css'>
@@ -51,7 +51,25 @@
            <div class="col-sm-6 col-md-offset-3 col-md-3">
                <div class="fixed-sidebar" data-offset-top="-50" data-ng-class="{errorMargin : error || success}" bs-affix>
                    <sidebar-search></sidebar-search>
-                   <sidebar-info></sidebar-info>
+                   <accordion class="sidebar-info">
+                       <accordion-group heading="What is this website?">
+                           MyEasyClass.com was made to answer the #1 questions students face
+                           semester after semester when it's time to sign up for courses: <strong>"What are some easy classes to fill my schedule?"</strong>
+                       </accordion-group>
+                       <accordion-group heading="Why would I use this instead of RateMyProfessors.com?" class="extra-info">
+                           Competitors like RateMyProfessors.com are great resources if you want to look up a specific class,
+                           but there's currently no solution out there that lets students easily browse through recommended classes at their university.
+                       </accordion-group>
+                       <accordion-group heading="Whats with the arrows?" class="extra-info">
+                           MyEasyClass.com lets you rate a class by clicking one button.
+                           Feel free to create an account (it takes two seconds) and upvote any courses you have taken that you would recommend to fellow students.
+                           If a class you enjoyed isn't currently listed, you can easily add it by clicking the "Add A New Class" button at the top of the screen.
+                       </accordion-group>
+                       <accordion-group heading="Bro, this class is categorized wrong" class="extra-info">
+                           If a class is listed in a content area it shouldn't be, or if it isn't in one it belongs to, feel free to let us know
+                           <a href="https://docs.google.com/forms/d/1fj8Z_4xvIbV2EY0lcpzZuxJj_1HevAGlEiVtr8B2Ci0/viewform">here.</a>
+                       </accordion-group>
+                   </accordion>
                </div>
            </div>
             <!--Main container-->

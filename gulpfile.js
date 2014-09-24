@@ -87,7 +87,7 @@ gulp.task('watch', ['build'], function () {
 /**
  * Production Tasks
  * */
-gulp.task('prod-js', function() {
+gulp.task('prod', function() {
     return gulp.src([
         'dist/packages.js',
         'dist/app.js'
@@ -96,5 +96,3 @@ gulp.task('prod-js', function() {
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });
-
- gulp.task('prod', ['build', 'prod-js']);
