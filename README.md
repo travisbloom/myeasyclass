@@ -1,6 +1,4 @@
-myeasyclass
+MyEasyClass.com
 ===========
 
-Rebuilding my honors thesis from the ground up.
-
-Replacing the mess of JQuery it was written in with Angular.js
+A simple, reddit-style, Angular.js application written for my honors thesis while at school. You can find out more about it at travisbloom.me, under projects.
