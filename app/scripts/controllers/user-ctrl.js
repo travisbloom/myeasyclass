@@ -9,7 +9,6 @@ angular.module('myEasyClass')
             userFactory.logIn($scope.signIn.username, $scope.signIn.pass).then(function (data) {
                 $modalInstance.close('Welcome back ' + data.username);
             }, function(err){
-                console.log($scope.error);
                 if (err.message = "invalid login parameters") {
                     $scope.error = 'Looks like that username or password doesn\'t exist. If you\'re new here, click the "Create An Account" button';
                 //catch any other error returned

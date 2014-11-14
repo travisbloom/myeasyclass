@@ -47,11 +47,9 @@ angular.module('myEasyClass')
                 Course.set("Area4", data.Area4);
                 Course.save(null, {
                     success: function(Course) {
-                        console.log(Course);
                         deferred.resolve(Course);
                     },
                     error: function(Course, error) {
-                        console.log(error);
                         deferred.reject();
                     }
                 });

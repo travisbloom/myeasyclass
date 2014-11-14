@@ -8,27 +8,22 @@ angular.module('myEasyClass')
                 username: null
             },
             currentUser: function () {
-                var deferred = $q.defer();
                 //checks if there is already an active user
                 if (parseUser.data.username) {
-                    deferred.resolve(parseUser.data.username);
+                    return parseUser.data.username;
                 } else {
                     //Parse checks localStorage for a active user session
                     if (Parse.User.current()) {
                         parseUser.data.username = Parse.User._currentUser.attributes.username;
-                        deferred.resolve(Parse.User._currentUser.attributes.username);
+                        return Parse.User._currentUser.attributes.username;
                     } else {
-                        deferred.reject();
+                        return false;
                     }
                 }
-                return deferred.promise;
             },
             logOut: function () {
-                var deferred = $q.defer();
                 Parse.User.logOut();
                 parseUser.data.username = null;
-                deferred.resolve();
-                return deferred.promise;
             },
             logIn: function (username, pw) {
                 var deferred = $q.defer();

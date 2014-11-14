@@ -31,20 +31,9 @@ angular.module('myEasyClass')
              * */
             getRelations: function (relationsArray) {
                 var counter, returnedPromises = [];
-                console.log('current user');
                 //iterate through the passed relationships
                 for (counter = 0; counter < relationsArray.length; counter++) {
-                    //create an anon function to wrap the individual promises
-                    (function () {
-                        var deferred = $q.defer();
-                        queryRelation(relationsArray[counter]).then(function (data) {
-                            //set the attribute of the relationshipObj to the relation string, add the array as the value
-                            deferred.resolve(data);
-                        }, function (err) {
-                            deferred.reject({error: err});
-                        });
-                        returnedPromises.push(deferred.promise);
-                    })();
+                        returnedPromises.push(queryRelation(relationsArray[counter]));
                 }
                 //return the array of promises once they have all been resolved
                 return $q.all(returnedPromises);
@@ -53,11 +42,9 @@ angular.module('myEasyClass')
              * maps the requested relationships to their respective classes
              * */
             mapClassRelations: function (relationsArray) {
-                var counter, deferred = $q.defer(), retunedRelations = {}, classCounter, rankedCounter, dislikesCounter,
+                var counter, retunedRelations = {}, classCounter, rankedCounter, dislikesCounter,
                     classes = classesFactory.angularClasses;
-                parseRelations.getRelations(relationsArray).then (function(data) {
-                    console.log(data);
-                    console.log(classes);
+                return parseRelations.getRelations(relationsArray).then (function(data) {
                     //changes array of relations to an object with relation attributes
                     //TODO remove the need to do this, it's redundant
                     for (counter = 0; counter < data.length; counter++) {
@@ -78,11 +65,8 @@ angular.module('myEasyClass')
                             }
                         }
                     }
-                    deferred.resolve(classes);
-                }, function () {
-                    deferred.reject();
+                    return classes;
                 });
-                return deferred.promise;
             },
              /**
              * downvote or upvote a class
@@ -97,7 +81,6 @@ angular.module('myEasyClass')
                     //needed to quickly query relation data added to the class already by the relation factory
                     angularClass = classesFactory.angularClasses[index];
                 //if theres no active user
-                 console.log(currentUser);
                 if (!currentUser) {
                     deferred.reject('You must be logged in to vote on a class');
                 } else {

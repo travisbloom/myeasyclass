@@ -30,11 +30,7 @@ angular.module('myEasyClass')
          * Checks for a current user and set the navbar accordingly
          **/
         userStatus = function () {
-            userFactory.currentUser().then(function (username) {
-                $scope.user.name = username;
-            }, function () {
-                $scope.user.name = false;
-            });
+            $scope.user.name = userFactory.currentUser();
         };
         /**
          * pull in classes and map their respective relationships with the user if signed in
@@ -45,11 +41,11 @@ angular.module('myEasyClass')
             classesFactory.getClasses(sortType).then(function() {
                 $scope.classes = classesFactory.angularClasses;
                 //if a user is logged in
-                userFactory.currentUser().then(function () {
+                if (userFactory.currentUser()) {
                     mapRelations();
-                }, function () {
+                } else {
                     $scope.loading = false;
-                });
+                }
             }, function () {
                 //mock classes on error, needed for offline dev work
 //                $scope.classes = [{CourseNumber: 'test', Easiness: 4}];
@@ -63,15 +59,14 @@ angular.module('myEasyClass')
         $scope.logOut = function () {
             var counter;
             $scope.collapsed.nav = true;
-            userFactory.logOut().then(function(){
-                userStatus();
-                //reset class obj relations
-                for (counter = 0; counter < $scope.classes.length; counter++) {
-                    $scope.classes[counter].likedByCurrentUser = false;
-                    $scope.classes[counter].dislikedByCurrentUser = false;
-                }
-                $scope.success = 'You\'ve successfully logged out.'
-            });
+            userFactory.logOut();
+            userStatus();
+            //reset class obj relations
+            for (counter = 0; counter < $scope.classes.length; counter++) {
+                $scope.classes[counter].likedByCurrentUser = false;
+                $scope.classes[counter].dislikedByCurrentUser = false;
+            }
+            $scope.success = 'You\'ve successfully logged out.'
         };
 
         /**
